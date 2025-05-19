@@ -1,0 +1,9 @@
+<div class="group-list">
+  <h2>Liste des Groupes</h2>
+  <ul>
+    <li *ngFor="let group of groups">
+      <a [routerLink]="['/groups', group.id]">{{ group.name }}</a>
+    </li>
+  </ul>
+  <button (click)="createGroup()">Créer un nouveau groupe</button>
+</div>

@@ -1,0 +1,21 @@
+<div class="gantt-chart">
+  <h2>Planning des Projets</h2>
+  <div class="gantt-header">
+    <div class="gantt-header-item">Projet</div>
+    <div class="gantt-header-item">Début</div>
+    <div class="gantt-header-item">Fin Prévue</div>
+    <div class="gantt-header-item">Fin Réelle</div>
+    <div class="gantt-header-item">Statut</div>
+  </div>
+  <div class="gantt-body">
+    <ng-container *ngFor="let project of projects">
+      <div class="gantt-row">
+        <div class="gantt-item">{{ project.name }}</div>
+        <div class="gantt-item">{{ project.startDate | date: 'dd/MM/yyyy' }}</div>
+        <div class="gantt-item">{{ project.plannedEndDate | date: 'dd/MM/yyyy' }}</div>
+        <div class="gantt-item">{{ project.actualEndDate ? (project.actualEndDate | date: 'dd/MM/yyyy') : 'N/A' }}</div>
+        <div class="gantt-item">{{ project.status }}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>

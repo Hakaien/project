@@ -1,0 +1,48 @@
+{
+  "dashboard": "Tableau de bord",
+  "projects": "Projets",
+  "groups": "Groupes",
+  "users": "Utilisateurs",
+  "archive": "Archives",
+  "createProject": "Créer un projet",
+  "editProject": "Modifier le projet",
+  "deleteProject": "Supprimer le projet",
+  "projectName": "Nom du projet",
+  "projectDescription": "Description du projet",
+  "projectCategory": "Catégorie du projet",
+  "projectTags": "Tags du projet",
+  "projectStartDate": "Date de début",
+  "projectEndDate": "Date de fin prévue",
+  "projectActualEndDate": "Date de fin réelle",
+  "projectStatus": "Statut du projet",
+  "projectStatusUpcoming": "À venir",
+  "projectStatusInProgress": "En cours",
+  "projectStatusSuspended": "Suspendu",
+  "projectStatusCompleted": "Terminé",
+  "externalLinks": "Liens externes",
+  "userRoles": {
+    "admin": "Administrateur",
+    "projectManager": "Chef de projet",
+    "developer": "Développeur",
+    "support": "Support",
+    "projectConsultant": "Consultant projet",
+    "externalProvider": "Prestataire externe"
+  },
+  "notifications": {
+    "projectCreated": "Projet créé avec succès.",
+    "projectUpdated": "Projet mis à jour avec succès.",
+    "projectDeleted": "Projet supprimé avec succès.",
+    "groupCreated": "Groupe créé avec succès.",
+    "groupUpdated": "Groupe mis à jour avec succès.",
+    "groupDeleted": "Groupe supprimé avec succès."
+  },
+  "history": {
+    "action": "Action",
+    "timestamp": "Horodatage",
+    "user": "Utilisateur",
+    "details": "Détails"
+  },
+  "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+  "yes": "Oui",
+  "no": "Non"
+}

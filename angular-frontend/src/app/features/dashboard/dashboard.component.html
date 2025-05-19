@@ -1,0 +1,16 @@
+<div class="dashboard">
+  <h1>Tableau de Bord</h1>
+  <div class="project-list">
+    <h2>Projets en cours</h2>
+    <app-project-card *ngFor="let project of ongoingProjects" [project]="project"></app-project-card>
+  </div>
+  <div class="group-list">
+    <h2>Groupes d'utilisateurs</h2>
+    <ul>
+      <li *ngFor="let group of userGroups">{{ group.name }}</li>
+    </ul>
+  </div>
+  <div class="notifications">
+    <app-notification *ngFor="let notification of notifications" [notification]="notification"></app-notification>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="archive-container">
+  <h2>Projets Archivés</h2>
+  <div *ngIf="archivedProjects.length === 0" class="no-archive-message">
+    <p>Aucun projet archivé disponible.</p>
+  </div>
+  <div *ngFor="let project of archivedProjects" class="archived-project-card">
+    <h3>{{ project.name }}</h3>
+    <p>{{ project.description }}</p>
+    <p><strong>Statut:</strong> {{ project.status }}</p>
+    <p><strong>Dates:</strong> Début: {{ project.startDate | date:'dd/MM/yyyy' }}, Fin prévue: {{ project.expectedEndDate | date:'dd/MM/yyyy' }}, Fin réelle: {{ project.actualEndDate | date:'dd/MM/yyyy' }}</p>
+    <button (click)="restoreProject(project.id)">Restaurer</button>
+  </div>
+</div>

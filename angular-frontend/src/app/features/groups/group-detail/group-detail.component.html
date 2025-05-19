@@ -1,0 +1,16 @@
+<div class="group-detail">
+  <h2>Détails du groupe</h2>
+  <div *ngIf="group">
+    <h3>{{ group.name }}</h3>
+    <p><strong>Description:</strong> {{ group.description }}</p>
+    <p><strong>Membres:</strong></p>
+    <ul>
+      <li *ngFor="let member of group.members">{{ member.name }} ({{ member.role }})</li>
+    </ul>
+    <button (click)="editGroup()">Modifier le groupe</button>
+    <button (click)="archiveGroup()">Archiver le groupe</button>
+  </div>
+  <div *ngIf="!group">
+    <p>Aucun groupe trouvé.</p>
+  </div>
+</div>

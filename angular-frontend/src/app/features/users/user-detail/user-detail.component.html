@@ -1,0 +1,14 @@
+<div class="user-detail">
+  <h2>Détails de l'utilisateur</h2>
+  <div *ngIf="user">
+    <p><strong>Nom:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Rôle:</strong> {{ user.role }}</p>
+    <p><strong>Groupes:</strong> {{ user.groups.join(', ') }}</p>
+    <p><strong>Date de création:</strong> {{ user.createdAt | date:'dd/MM/yyyy' }}</p>
+  </div>
+  <div *ngIf="!user">
+    <p>Aucun utilisateur trouvé.</p>
+  </div>
+  <button (click)="goBack()">Retour</button>
+</div>

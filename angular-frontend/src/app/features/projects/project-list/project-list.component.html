@@ -1,0 +1,6 @@
+<div class="project-list">
+  <h2>Liste des Projets</h2>
+  <div *ngFor="let project of projects" class="project-card">
+    <app-project-card [project]="project"></app-project-card>
+  </div>
+</div>
