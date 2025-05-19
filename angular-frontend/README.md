@@ -1,67 +1,59 @@
-# Angular Frontend Documentation
+# AngularFrontend
 
-## Introduction
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
 
-This Angular frontend application is part of the dashboard project, which aims to provide a comprehensive solution for managing and organizing projects within user-defined groups. The application allows users to create, track, and manage projects effectively.
+## Development server
 
-## Project Structure
+To start a local development server, run:
 
-The project is organized as follows:
-
-- `src/app`: Contains the main application components, services, and modules.
-- `src/environments`: Contains environment configuration files for different build environments (e.g., development, production).
-- `package.json`: Configuration file for npm, listing dependencies, scripts, and metadata.
-- `angular.json`: Angular workspace configuration, including project settings and build options.
-- `tsconfig.json`: TypeScript configuration file specifying compiler options.
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (version 14 or higher)
-- npm (version 6 or higher)
-
-### Installation
-
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd dashboard-app/angular-frontend
-   ```
-
-2. Install the dependencies:
-   ```
-   npm install
-   ```
-
-### Running the Application
-
-To start the Angular application, run the following command:
-```
-npm start
-```
-The application will be available at `http://localhost:4200`.
-
-## Development
-
-### Building the Application
-
-To build the application for production, use:
-```
-npm run build
+```bash
+ng serve
 ```
 
-### Testing
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-To run the unit tests, use:
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
 ```
-npm test
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
 ```
 
-## Contributing
+## Building
 
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+To build the project run:
 
-## License
+```bash
+ng build
+```
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
