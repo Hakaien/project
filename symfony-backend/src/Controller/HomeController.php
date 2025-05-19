@@ -3,14 +3,31 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home')]
-    public function index(): RedirectResponse
+    #[Route('/', name: 'app_home')]
+    public function index(): BinaryFileResponse
     {
-        return $this->redirect('/app/');
+        $file = $this->getParameter('kernel.project_dir') . '/public/app/index.html';
+        $response = new BinaryFileResponse($file);
+        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'index.html');
+        return $response;
+    }
+
+    #[Route('/{reactRouting}', name: 'app_angular', requirements: [
+        'reactRouting' => '(?!api|_wdt|_profiler|.*\.(?:js|css|ico|png|jpg|jpeg|svg|webp|json|txt|map)$).*'
+    ])]
+    public function angularApp(): BinaryFileResponse
+    {
+        $file = $this->getParameter('kernel.project_dir') . '/public/index.html';
+        $response = new BinaryFileResponse($file);
+        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'index.html');
+        return $response;
     }
 }

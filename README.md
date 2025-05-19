@@ -1,98 +1,97 @@
 # Dashboard Application
 
-This project is a dashboard application designed for project management, allowing users to create, track, and organize projects within defined user groups. The application consists of two main components: an Angular frontend and a Symfony backend.
+Ce projet est une application de gestion de projets composée de deux parties principales :  
 
-## Project Structure
+- **Frontend Angular** (interface utilisateur)
+- **Backend Symfony** (API, logique métier, gestion BDD)
 
-- **angular-frontend**: Contains the Angular application responsible for the user interface.
-  - **src/app**: Main application components, services, and modules.
-  - **src/environments**: Environment configuration files for different build environments.
-  - **package.json**: Configuration file for npm, listing dependencies and scripts.
-  - **angular.json**: Angular workspace configuration file.
-  - **tsconfig.json**: TypeScript configuration file.
-  - **README.md**: Documentation specific to the Angular frontend.
+---
 
-- **symfony-backend**: Contains the Symfony application that serves as the API and handles backend logic and database management.
-  - **config**: Configuration files for routing, services, and parameters.
-  - **public**: Document root containing the entry point for the application.
-  - **src**: Main application code, including controllers, entities, repositories, and services.
-  - **migrations**: Migration files for managing database schema changes.
-  - **bin**: Executable files, including console commands.
-  - **var**: Temporary files, logs, and cache.
-  - **vendor**: Third-party libraries and dependencies installed via Composer.
-  - **composer.json**: Configuration file for Composer, listing dependencies and scripts.
-  - **composer.lock**: Locks the versions of the dependencies installed via Composer.
-  - **README.md**: Documentation specific to the Symfony backend.
+## Architecture du projet
 
-## Setup Instructions
+dashboard-app/
+│
+├── angular-frontend/           # Application Angular (frontend)
+│   ├── src/
+│   │   ├── app/                # Composants, modules, services Angular
+│   │   ├── assets/             # Fichiers statiques (images, etc.)
+│   │   ├── environments/       # Configurations d'environnement Angular
+│   │   ├── index.html          # Point d'entrée Angular
+│   │   ├── main.ts             # Bootstrap Angular
+│   │   ├── styles.scss         # Styles globaux
+│   │   └── polyfills.ts        # Polyfills (si nécessaire)
+│   ├── angular.json            # Configuration Angular CLI
+│   ├── package.json            # Dépendances npm
+│   ├── tsconfig.json           # Configuration TypeScript
+│   ├── tsconfig.app.json       # Config TypeScript spécifique à l'app
+│   ├── proxy.conf.json         # Proxy pour le dev (API Symfony)
+│   └── ...                     # Autres fichiers de config
+│
+├── symfony-backend/            # Application Symfony (backend)
+│   ├── bin/                    # Commandes Symfony
+│   ├── config/                 # Configurations Symfony
+│   ├── public/                 # Racine web (sert Angular et API)
+│   │   └── app/                # Build Angular (prod)
+│   │         └── browser/      # Build Angular
+│   ├── src/                    # Contrôleurs, entités, services Symfony
+│   ├── var/                    # Fichiers temporaires, logs, cache
+│   ├── vendor/                 # Dépendances PHP (Composer)
+│   ├── composer.json           # Dépendances Composer
+│   ├── .env                    # Variables d'environnement
+│   └── ...                     # Autres fichiers Symfony
+│
+├── README.md                   # Documentation du projet
+└── ...
 
-### Prerequisites
+---
 
-- PHP >= 7.4
-- Composer
-- Node.js >= 14.0.0
-- npm >= 6.0.0
-- MySQL or PostgreSQL database
+## Fonctionnement
 
-### Installation
+- **Développement** :
+  - Angular : `ng serve` sur le port 4200 (proxy API via `proxy.conf.json`)
+  - Symfony : `symfony serve` ou `php -S localhost:8000 -t public`
+- **Production** :
+  - Builder Angular dans `symfony-backend/public/app/`
+  - Symfony sert à la fois l’API et l’interface Angular sur le même port
 
-1. **Clone the repository**:
-   ```
-   git clone <repository-url>
-   cd dashboard-app
-   ```
+---
 
-2. **Set up the Symfony backend**:
-   - Navigate to the `symfony-backend` directory:
-     ```
-     cd symfony-backend
-     ```
-   - Install dependencies using Composer:
-     ```
-     composer install
-     ```
-   - Configure your database connection in the `.env` file.
+## Démarrage rapide
 
-3. **Set up the Angular frontend**:
-   - Navigate to the `angular-frontend` directory:
-     ```
-     cd ../angular-frontend
-     ```
-   - Install dependencies using npm:
-     ```
-     npm install
-     ```
+```bash
+# Backend
+cd symfony-backend
+composer install
+symfony serve
 
-### Running the Application
+# Frontend (dev)
+cd ../angular-frontend
+npm install
+npm start
 
-- **Start the Symfony backend**:
-  ```
-  php -S localhost:8000 -t public
-  ```
+# Frontend (prod)
+ng build --output-path=../symfony-backend/public/app/browser --base-href=/app/
+```
 
-- **Start the Angular frontend**:
-  ```
-  ng serve --port 4200
-  ```
+---
 
-### Accessing the Application
+## Accès
 
-- The Angular frontend will be accessible at `http://localhost:4200`.
-- The Symfony backend API will be accessible at `http://localhost:8000`.
+- **Frontend Angular** :  
+  - Dev : [http://localhost:4200](http://localhost:4200)
+  - Prod : [http://localhost:8000/app/](http://localhost:8000/app/)
+- **API Symfony** : [http://localhost:8000/api/](http://localhost:8000/api/)
 
-## Features
+---
 
-- User management with roles (Administrator, Project Manager, Developer, Support, Project Consultant, External Provider).
-- Project management with categories, tags, and status tracking.
-- Group management allowing users to belong to multiple groups.
-- Project archiving and restoration capabilities.
-- Notification system for internal alerts.
-- Historical action logging based on user roles.
+## Notes
 
-## Contributing
+- Les fichiers statiques Angular sont servis depuis `public/app/browser/` en production.
+- Le proxy Angular (`proxy.conf.json`) permet d’éviter les problèmes de CORS en développement.
+- Les routes `/api/*` sont réservées à l’API Symfony.
 
-Contributions are welcome! Please submit a pull request or open an issue for any suggestions or improvements.
+---
 
-## License
+## Structure évolutive
 
-This project is licensed under the MIT License.
+Ajoute ici les modules, dossiers ou conventions spécifiques à ton projet au fur et à mesure de son évolution.
