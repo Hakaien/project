@@ -224,6 +224,42 @@ Cette configuration :
 
 ---
 
+## Script de déploiement : `deploy.sh`
+
+Le script `deploy.sh` automatise l’intégralité du processus de build et de déploiement du frontend Angular vers le backend Symfony. Voici les grandes étapes :
+
+1. **Compilation Tailwind CSS**
+   - Génère le fichier `output.css` à partir de `input.css` via Tailwind CLI.
+   - Vérifie la présence du fichier source et arrête le script en cas d’erreur.
+
+2. **Installation des dépendances Node.js**
+   - Installe les dépendances si le dossier `node_modules` n’existe pas, sinon passe l’étape pour accélérer le déploiement.
+
+3. **Build Angular (production)**
+   - Compile l’application Angular en mode production.
+   - Vérifie la présence du dossier de build généré.
+
+4. **Déploiement vers Symfony**
+   - Nettoie le dossier `symfony-backend/public`.
+   - Copie le `index.html` et le CSS généré dans le dossier public Symfony.
+   - Copie les assets Angular (images, polices, etc.) si présents.
+
+5. **Versioning des fichiers JS/CSS**
+   - Renomme les fichiers JS et CSS avec un hash SHA1 pour le cache busting.
+   - Met à jour les références dans `index.html`.
+   - Génère un fichier `manifest.json` pour faire le lien entre les noms originaux et versionnés.
+
+6. **Nettoyage**
+   - Supprime le fichier temporaire `output.css` côté Angular après copie.
+
+7. **Logs et robustesse**
+   - Affiche des messages colorés pour chaque étape.
+   - Arrête le script immédiatement en cas d’erreur critique (fichier manquant, build échoué, etc.).
+
+Ce script garantit un déploiement reproductible, propre et optimisé pour la production, avec gestion du cache et des assets statiques.
+
+---
+
 ## Structure évolutive
 
 Ajoute ici les modules, dossiers ou conventions spécifiques à ton projet au fur et à mesure de son évolution.
