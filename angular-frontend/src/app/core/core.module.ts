@@ -8,7 +8,7 @@ import { AuthModule } from './auth/auth.module';
     CommonModule,
     AuthModule.forRoot({
       defaultRedirectUrl: '/dashboard',
-      tokenRefreshThreshold: 300 // 5 minutes
+      tokenRefreshThreshold: 300
     })
   ],
   providers: [],
