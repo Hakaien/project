@@ -9,25 +9,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(): BinaryFileResponse
-    {
-        $file = $this->getParameter('kernel.project_dir') . '/public/app/index.html';
-        $response = new BinaryFileResponse($file);
-        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'index.html');
-        return $response;
-    }
-
     #[Route('/{reactRouting}', name: 'app_angular', requirements: [
-        'reactRouting' => '(?!api|_wdt|_profiler|.*\.(?:js|css|ico|png|jpg|jpeg|svg|webp|json|txt|map)$).*'
-    ])]
+        'reactRouting' => '^(?!api|_wdt|_profiler|.*\.(js|css|ico|png|jpg|jpeg|svg|webp|json|txt|map)$).*'
+    ], defaults: ['reactRouting' => ''])]
     public function angularApp(): BinaryFileResponse
     {
         $file = $this->getParameter('kernel.project_dir') . '/public/index.html';
+
         $response = new BinaryFileResponse($file);
         $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, 'index.html');
+
         return $response;
     }
 }
