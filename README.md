@@ -1,6 +1,6 @@
 # Dashboard Application
 
-Ce projet est une application de gestion de projets composée de deux parties principales :  
+Ce projet est une application de gestion de projets composée de deux parties principales :
 
 - **Frontend Angular** (interface utilisateur)
 - **Backend Symfony** (API, logique métier, gestion BDD)
@@ -9,49 +9,66 @@ Ce projet est une application de gestion de projets composée de deux parties pr
 
 ## Architecture du projet
 
-dashboard-app/
+```
+project_default/
+├── deploy.sh                  # Script de build et déploiement (Angular → Symfony)
+├── README.md                  # Documentation du projet
 │
-├── angular-frontend/           # Application Angular (frontend)
-│   ├── src/
-│   │   ├── app/                # Composants, modules, services Angular
-│   │   ├── assets/             # Fichiers statiques (images, etc.)
-│   │   ├── environments/       # Configurations d'environnement Angular
-│   │   ├── index.html          # Point d'entrée Angular
-│   │   ├── main.ts             # Bootstrap Angular
-│   │   ├── styles.scss         # Styles globaux
-│   │   └── polyfills.ts        # Polyfills (si nécessaire)
-│   ├── angular.json            # Configuration Angular CLI
-│   ├── package.json            # Dépendances npm
-│   ├── tsconfig.json           # Configuration TypeScript
-│   ├── tsconfig.app.json       # Config TypeScript spécifique à l'app
-│   ├── proxy.conf.json         # Proxy pour le dev (API Symfony)
-│   └── ...                     # Autres fichiers de config
+├── angular-frontend/          # Application Angular (frontend)
+│   ├── angular.json           # Configuration Angular CLI
+│   ├── package.json           # Dépendances npm
+│   ├── proxy.conf.json        # Proxy pour le dev (API Symfony)
+│   ├── tsconfig*.json         # Configurations TypeScript
+│   ├── public/                # Fichiers statiques publics (favicon, etc.)
+│   └── src/
+│       ├── app/               # Composants, modules, services Angular
+│       │   ├── core/          # Services et modules centraux
+│       │   ├── features/      # Modules fonctionnels
+│       │   ├── layout/        # Composants de layout
+│       │   ├── models/        # Modèles de données
+│       │   └── shared/        # Composants partagés
+│       ├── assets/            # Images, polices, données statiques
+│       ├── environments/      # Configurations d'environnement Angular
+│       ├── i18n/              # Fichiers de traduction
+│       ├── styles/            # Fichiers SCSS globaux et utilitaires
+│       ├── index.html         # Point d'entrée Angular
+│       ├── main.ts            # Bootstrap Angular
+│       ├── input.css          # Source Tailwind CSS
+│       ├── output.css         # CSS généré par Tailwind (pour le déploiement)
+│       └── styles.scss        # Styles globaux
 │
-├── symfony-backend/            # Application Symfony (backend)
-│   ├── bin/                    # Commandes Symfony
-│   ├── config/                 # Configurations Symfony
-│   ├── public/                 # Racine web (sert Angular et API)
-│   │   └── app/                # Build Angular (prod)
-│   │         └── browser/      # Build Angular
-│   ├── src/                    # Contrôleurs, entités, services Symfony
-│   ├── var/                    # Fichiers temporaires, logs, cache
-│   ├── vendor/                 # Dépendances PHP (Composer)
-│   ├── composer.json           # Dépendances Composer
-│   ├── .env                    # Variables d'environnement
-│   └── ...                     # Autres fichiers Symfony
-│
-├── README.md                   # Documentation du projet
-└── ...
+├── symfony-backend/           # Application Symfony (backend)
+│   ├── bin/                   # Commandes Symfony
+│   ├── config/                # Configurations Symfony
+│   │   ├── packages/          # Configs par bundle
+│   │   └── routes/            # Configs de routes
+│   ├── migrations/            # Migrations BDD
+│   ├── public/                # Racine web (sert Angular et API)
+│   │   ├── index.html         # Fichier d'entrée Angular copié (prod)
+│   │   ├── output.css         # CSS versionné copié (prod)
+│   │   ├── manifest.json      # Manifest de versioning
+│   │   ├── assets/            # Assets Angular copiés (prod)
+│   │   └── ...                # JS/CSS versionnés
+│   ├── src/                   # Contrôleurs, entités, repositories Symfony
+│   │   ├── Controller/
+│   │   ├── Entity/
+│   │   └── Repository/
+│   ├── var/                   # Fichiers temporaires, logs, cache
+│   ├── vendor/                # Dépendances PHP (Composer)
+│   ├── composer.json          # Dépendances Composer
+│   ├── composer.lock
+│   └── symfony.lock
+```
 
 ---
 
 ## Fonctionnement
 
-- **Développement** :
-  - Angular : `ng serve` sur le port 4200 (proxy API via `proxy.conf.json`)
-  - Symfony : `symfony serve` ou `php -S localhost:8000 -t public`
-- **Production** :
-  - Builder Angular dans `symfony-backend/public/app/`
+- **Développement** :
+  - Angular : `npm start` ou `ng serve` sur le port 4200 (proxy API via `proxy.conf.json`)
+  - Symfony : `symfony serve` ou `php -S localhost:8000 -t public`
+- **Production** :
+  - Utiliser le script `deploy.sh` pour builder Angular, générer le CSS Tailwind, copier et versionner les fichiers dans `symfony-backend/public/`
   - Symfony sert à la fois l’API et l’interface Angular sur le même port
 
 ---
@@ -69,32 +86,38 @@ cd ../angular-frontend
 npm install
 npm start
 
-# Frontend (prod)
-ng build --output-path=../symfony-backend/public/app/browser --base-href=/app/
+# Déploiement (prod)
+cd ..
+bash deploy.sh
 ```
 
 ---
 
 ## Accès
 
-- **Frontend Angular** :  
-  - Dev : [http://localhost:4200](http://localhost:4200)
-  - Prod : [http://localhost:8000/app/](http://localhost:8000/app/)
-- **API Symfony** : [http://localhost:8000/api/](http://localhost:8000/api/)
+- **Frontend Angular** :  
+  - Dev : [http://localhost:4200](http://localhost:4200)
+  - Prod : [http://localhost:8000/](http://localhost:8000/)
+- **API Symfony** : [http://localhost:8000/api/](http://localhost:8000/api/)
 
 ---
 
-## Notes
+## Notes importantes
 
-- Les fichiers statiques Angular sont servis depuis `public/app/` en production.
+- Le script `deploy.sh` gère :
+  - La compilation Tailwind CSS (input.css → output.css)
+  - Le build Angular (production)
+  - La copie et le versioning des fichiers JS/CSS dans Symfony (`public/`)
+  - La génération d’un `manifest.json` pour le mapping des fichiers versionnés
+  - La copie des assets Angular (images, fonts, etc.)
 - Le proxy Angular (`proxy.conf.json`) permet d’éviter les problèmes de CORS en développement.
 - Les routes `/api/*` sont réservées à l’API Symfony.
+- Les fichiers statiques Angular sont servis depuis `symfony-backend/public/` en production.
+- Pour de meilleures performances, configure ton serveur web pour :
+  - `Cache-Control: max-age=31536000, immutable` pour les fichiers versionnés
+  - `no-cache` ou `must-revalidate` pour `index.html`
 
 ---
-
-## Structure évolutive
-
-Ajoute ici les modules, dossiers ou conventions spécifiques à ton projet au fur et à mesure de son évolution.
 
 ## 🔄 Gestion des mises à jour des dépendances
 
@@ -105,12 +128,9 @@ Dans ce projet, nous utilisons des outils pour **gérer proprement les mises à 
 #### [`npm-check-updates`](https://www.npmjs.com/package/npm-check-updates)
 
 Cet outil permet de :
-
-- Lister les versions *majeures*, *mineures* ou *patch* disponibles
-- Mettre à jour les versions dans le fichier `package.json` **sans modifier immédiatement les fichiers installés**
+- Lister les versions majeures, mineures ou patch disponibles
+- Mettre à jour les versions dans le fichier `package.json` sans modifier immédiatement les fichiers installés
 - Forcer les dernières versions stables, même si elles cassent la compatibilité
-
----
 
 ### 🛠️ Mise en place
 
@@ -120,88 +140,90 @@ Installe `npm-check-updates` globalement (si ce n’est pas déjà fait) :
 npm install -g npm-check-updates
 ```
 
-🔍 Vérifier les mises à jour disponibles
+#### Vérifier les mises à jour disponibles
 
 Dans le dossier du projet :
 
+```bash
 ncu
+```
 
 Cela affichera les dépendances dans package.json avec leur version actuelle et la version la plus récente disponible.
 
-Exemple de sortie :
+#### Mettre à jour package.json automatiquement
 
- tailwindcss     ^3.4.1  →  ^4.1.7
- postcss         ^8.4.21 →  ^9.0.0
-
-🚀 Mettre à jour package.json automatiquement
-
-Une fois prêt à mettre à jour les versions :
-
+```bash
 ncu -u
-
-Cela met à jour les versions listées dans package.json, mais ne modifie pas encore les dépendances installées.
-
-Ensuite, exécute :
-
 npm install
+```
 
-🧹 Nettoyage recommandé
+#### Nettoyage recommandé
 
 Avant de réinstaller après des mises à jour :
 
+```bash
 rm -rf node_modules package-lock.json
 npm install
+```
 
-🪓 Supprimer les versions obsolètes et aplatir les dépendances
+#### Aplatir les dépendances
 
-Pour éviter les conflits liés aux anciennes dépendances :
-
+```bash
 npm dedupe
+```
 
-⚠️ Gérer les dépendances dépréciées
+#### Vérifier les vulnérabilités de sécurité
+
+```bash
+npm audit fix
+npm audit
+```
+
+#### Gérer les dépendances dépréciées
 
 Lors de l’installation, tu peux voir des avertissements comme :
 
+```
 npm WARN deprecated inflight@1.0.6: This module is not supported...
 npm WARN deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+```
 
-Ces messages indiquent que certaines sous-dépendances utilisées sont obsolètes. Pour identifier leur provenance :
+Pour identifier leur provenance :
 
+```bash
 npm ls inflight
 npm ls rimraf
 npm ls glob
+```
 
 Ensuite, mets à jour les packages parents ou cherche une alternative plus récente.
-🛡️ Vérifier les vulnérabilités de sécurité
 
-Exécute ces commandes pour vérifier et corriger les vulnérabilités :
+---
 
-npm audit fix         # Correction automatique si possible
-npm audit             # Audit complet des failles restantes
+## Exemple de configuration Nginx
 
-🔄 Routine de mise à jour recommandée
+Pour servir Symfony et Angular proprement en production :
 
-#### 1. Mettre à jour les outils globaux si besoin
+```nginx
+location / {
+    root /var/www/html/symfony-backend/public;
+    try_files $uri $uri/ /index.html;
+}
 
-npm install -g npm-check-updates
+location ~* \.(js|css|png|jpg|svg|woff|woff2)$ {
+    root /var/www/html/symfony-backend/public;
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+```
 
-#### 2. Vérifier les mises à jour disponibles
+Cette configuration :
+- Sert les fichiers statiques Angular et Symfony depuis le même dossier public
+- Permet le fallback Angular (SPA) sur index.html
+- Met en cache fort les fichiers versionnés (js, css, images, polices)
 
-ncu
+---
 
-#### 3. Mettre à jour le package.json
+## Structure évolutive
 
-ncu -u
-
-#### 4. Nettoyer et réinstaller
-
-rm -rf node_modules package-lock.json
-npm install
-
-#### 5. Aplatir les dépendances
-
-npm dedupe
-
-#### 6. Vérifier les failles de sécurité
-
-npm audit fix
+Ajoute ici les modules, dossiers ou conventions spécifiques à ton projet au fur et à mesure de son évolution.
