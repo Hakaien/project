@@ -1,10 +1,15 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    AuthModule.forRoot({
+      defaultRedirectUrl: '/dashboard',
+      tokenRefreshThreshold: 300 // 5 minutes
+    })
   ],
   providers: [],
 })
