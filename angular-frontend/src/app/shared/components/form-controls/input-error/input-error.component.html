@@ -1,1 +1,4 @@
-<p>input-error works!</p>
+<div class="error-message" *ngIf="hasError" role="alert" aria-live="polite">
+  <i class="error-icon" aria-hidden="true">⚠</i>
+  <span>{{ errorMessage }}</span>
+</div>

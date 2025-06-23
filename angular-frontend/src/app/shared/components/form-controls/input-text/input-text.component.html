@@ -1,1 +1,31 @@
-<p>input-text works!</p>
+<div class="form-field">
+  <label *ngIf="label" [for]="inputId" class="form-label">
+    {{ label }}
+    <span *ngIf="required" class="required-indicator" aria-label="requis">*</span>
+  </label>
+
+  <input
+    [id]="inputId"
+    [type]="type"
+    [value]="value"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [maxlength]="maxlength"
+    [minlength]="minlength"
+    [class]="inputClasses"
+    [attr.aria-describedby]="hasError ? inputId + '-error' : null"
+    [attr.aria-invalid]="hasError"
+    [attr.aria-required]="required"
+    [appAutofocus]="autofocus"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+
+  <app-input-error
+    *ngIf="control"
+    [control]="control"
+    [fieldName]="fieldName"
+    [id]="inputId + '-error'"
+  ></app-input-error>
+</div>

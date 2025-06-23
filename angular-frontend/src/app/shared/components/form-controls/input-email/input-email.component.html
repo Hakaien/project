@@ -1,1 +1,38 @@
-<p>input-email works!</p>
+<div class="form-field">
+  <label *ngIf="label" [for]="inputId" class="form-label">
+    {{ label }}
+    <span *ngIf="required" class="required-indicator" aria-label="requis">*</span>
+  </label>
+
+  <div [class]="wrapperClasses">
+    <input
+      [id]="inputId"
+      type="email"
+      [value]="value"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [class]="inputClasses"
+      [attr.aria-describedby]="hasError ? inputId + '-error' : null"
+      [attr.aria-invalid]="hasError"
+      [attr.aria-required]="required"
+      [appAutofocus]="autofocus"
+      autocomplete="email"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    />
+
+    <!-- Icône de validation -->
+    <div class="validation-icon" *ngIf="showValidationIcon">
+      <span class="icon-valid" *ngIf="isValid" aria-label="Email valide">✓</span>
+      <span class="icon-error" *ngIf="hasError" aria-label="Email invalide">✗</span>
+    </div>
+  </div>
+
+  <app-input-error
+    *ngIf="control"
+    [control]="control"
+    [fieldName]="fieldName"
+    [id]="inputId + '-error'"
+  ></app-input-error>
+</div>
