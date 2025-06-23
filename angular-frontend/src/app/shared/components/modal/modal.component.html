@@ -1,1 +1,38 @@
-<p>modal works!</p>
+<div class="modal-overlay"
+    *ngIf="isOpen"
+    (click)="onBackdropClick()"
+    [class.modal-centered]="modalConfig.centered">
+
+  <div class="modal-container"
+      [ngClass]="getSizeClass()"
+      (click)="onModalClick($event)"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="modalConfig.title ? 'modal-title' : null">
+
+    <!-- Header -->
+    <div class="modal-header" *ngIf="modalConfig.title || modalConfig.showCloseButton">
+      <h2 id="modal-title" class="modal-title" *ngIf="modalConfig.title">
+        {{ modalConfig.title }}
+      </h2>
+
+      <button type="button"
+              class="modal-close-btn"
+              *ngIf="modalConfig.showCloseButton"
+              (click)="closeModal()"
+              aria-label="Fermer">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer" *ngIf="true">
+      <ng-content select="[slot=footer]"></ng-content>
+    </div>
+  </div>
+</div>
