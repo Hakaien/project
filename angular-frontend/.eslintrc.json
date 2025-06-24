@@ -1,0 +1,133 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "dist/**/*",
+    "coverage/**/*",
+    "node_modules/**/*",
+    "testing/cypress/downloads/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "@typescript-eslint/recommended",
+        "@typescript-eslint/stylistic",
+        "@angular-eslint/recommended",
+        "@angular-eslint/template/process-inline-templates",
+        "prettier"
+      ],
+      "plugins": ["prettier"],
+      "rules": {
+        "prettier/prettier": "error",
+        // TypeScript règles
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/prefer-const": "error",
+        "@typescript-eslint/no-var-requires": "error",
+
+        // Angular règles
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/no-empty-lifecycle-method": "error",
+        "@angular-eslint/use-lifecycle-interface": "error",
+        "@angular-eslint/use-pipe-transform-interface": "error",
+
+        // Règles générales
+        "no-console": [
+          "warn",
+          {
+            "allow": ["warn", "error"]
+          }
+        ],
+        "no-debugger": "error",
+        "no-duplicate-imports": "error",
+        "no-unused-expressions": "error",
+        "prefer-const": "error"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "@angular-eslint/template/recommended",
+        "@angular-eslint/template/accessibility",
+        "prettier"
+      ],
+      "rules": {
+        "prettier/prettier": "error",
+        "@angular-eslint/template/interactive-supports-focus": "error",
+        "@angular-eslint/template/click-events-have-key-events": "error",
+        "@angular-eslint/template/mouse-events-have-key-events": "error",
+        "@angular-eslint/template/no-autofocus": "error",
+        "@angular-eslint/template/no-distracting-elements": "error"
+      }
+    },
+    {
+      "files": [
+        "*.spec.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "prettier/prettier": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-console": "off"
+      }
+    },
+    {
+      "files": [
+        "testing/**/*.ts",
+        "**/*.cy.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "env": {
+        "jest": true,
+        "cypress/globals": true
+      },
+      "plugins": ["cypress", "prettier"],
+      "rules": {
+        "prettier/prettier": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "cypress/no-assigning-return-values": "error",
+        "cypress/no-unnecessary-waiting": "error",
+        "cypress/assertion-before-screenshot": "warn"
+      }
+    }
+  ]
+}
