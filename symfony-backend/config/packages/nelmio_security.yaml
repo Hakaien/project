@@ -1,0 +1,37 @@
+nelmio_security:
+    clickjacking:
+        paths:
+            '^/.*': DENY # empêche le site d'être inclus dans un iframe (défense contre le clickjacking)
+
+    content_type:
+        nosniff: true # empêche les navigateurs d'essayer de deviner le type de contenu (défense XSS)
+
+    referrer_policy:
+        enabled: true
+        policies:
+            - 'strict-origin-when-cross-origin' # recommandé pour sécurité + compatibilité Angular
+            # 'no-referrer' est plus strict, mais peut poser souci avec certaines lib JS
+
+    csp:
+        enforce:
+            default-src:
+                - "'self'"
+            script-src:
+                - "'self'"
+                - "'unsafe-inline'"   # requis pour Angular si non compilé avec strict CSP
+            style-src:
+                - "'self'"
+                - "'unsafe-inline'"   # autorise les styles inline nécessaires à Angular Material etc.
+            img-src:
+                - "'self'"
+                - "data:"             # permet le chargement d’images encodées en base64 (fréquent côté Angular)
+            font-src:
+                - "'self'"
+                - "data:"             # idem pour certaines fontes Angular ou Material
+            connect-src:
+                - "'self'"
+                - "https://api.example.com" # à adapter à ton domaine backend exact
+            object-src:
+                - "'none'"           # bloque les plugins type Flash (obsolète, mais bonne pratique)
+            frame-ancestors:
+                - "'none'"           # empêche toute inclusion du site dans une iframe
