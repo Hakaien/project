@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslocoModule, TRANSLOCO_CONFIG, TRANSLOCO_LOADER, translocoConfig } from '@ngneat/transloco';
-import { TranslocoHttpLoader } from '../assets/i18n/transloco-loader'; // adapte le chemin si besoin
+import { TranslocoHttpLoader } from '../assets/i18n/transloco-loader';
 
 @NgModule({
   imports: [
     // autres imports de ton projet
-    HttpClientModule,            // Important pour que HttpClient fonctionne
     MatSnackBarModule,
     TranslocoModule,
   ],

@@ -5,6 +5,8 @@ import { GuestGuard } from './core/auth/guards/guest.guard';
 // Import de vos composants (à créer)
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { LoginComponent } from './features/auth/login/login.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
 
 export const appRoutes: Routes = [
   // Routes protégées (utilisateurs connectés)
@@ -23,12 +25,12 @@ export const appRoutes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent, // À créer
+    component: RegisterComponent,
     canActivate: [GuestGuard]
   },
   {
     path: 'forgot-password',
-    component: ForgotPasswordComponent, // À créer
+    component: ForgotPasswordComponent,
     canActivate: [GuestGuard]
   },
 

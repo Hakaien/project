@@ -1,0 +1,90 @@
+# config/packages/security.yaml
+security:
+    # Encodeur de mots de passe
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+
+    # Fournisseurs d'utilisateurs
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    # Configuration des firewalls
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # Firewall pour l'API
+        api:
+            pattern: ^/api
+            stateless: true
+            jwt: ~
+            entry_point: jwt
+            json_login:
+                check_path: /api/auth/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            logout:
+                path: /api/auth/logout
+                target: /api/auth/logout
+            
+            # Configuration de l'authentification à deux facteurs
+            two_factor:
+                auth_form_path: 2fa_login    # Route pour le formulaire 2FA
+                check_path: 2fa_login_check  # Route pour la vérification 2FA
+                default_target_path: /api/user/profile  # Redirection après succès 2FA
+                always_use_default_target_path: false
+                auth_code_parameter_name: _auth_code
+                trusted_parameter_name: _trusted
+                multi_factor: false
+                
+            user_checker: App\Security\UserChecker
+
+        # Firewall principal (si nécessaire pour certaines routes publiques)
+        main:
+            pattern: ^/
+            lazy: true
+            provider: app_user_provider
+
+    # Contrôle d'accès
+    access_control:
+        # Routes de déconnexion accessibles pendant la 2FA
+        - { path: ^/api/auth/logout, role: PUBLIC_ACCESS }
+        
+        # Routes 2FA accessibles uniquement pendant le processus 2FA
+        - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+        
+        # Routes d'authentification publiques
+        - { path: ^/api/auth/login, role: PUBLIC_ACCESS }
+        - { path: ^/api/auth/register, role: PUBLIC_ACCESS }
+        - { path: ^/api/auth/forgot-password, role: PUBLIC_ACCESS }
+        - { path: ^/api/auth/reset-password, role: PUBLIC_ACCESS }
+        
+        # Documentation API publique (si Swagger/OpenAPI)
+        - { path: ^/api/doc, role: PUBLIC_ACCESS }
+        
+        # Toutes les autres routes API nécessitent une authentification complète
+        - { path: ^/api, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/test/api, roles: ROLE_ADMIN }
+
+    # Configuration des rôles hiérarchiques
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+when@test:
+    security:
+        password_hashers:
+            # By default, password hashers are resource intensive and take time. This is
+            # important to generate secure password hashes. In tests however, secure hashes
+            # are not important, waste resources and increase test times. The following
+            # reduces the work factor to the lowest possible values.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4
+                time_cost: 3
+                memory_cost: 10

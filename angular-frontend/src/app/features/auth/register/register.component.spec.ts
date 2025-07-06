@@ -144,7 +144,7 @@ describe('RegisterComponent', () => {
     });
 
     it('should call authService.register when form is valid', () => {
-      mockAuthService.register.and.returnValue(of({ success: true }));
+      mockAuthService.register.and.returnValue(of({ success: true, message: 'Inscription réussie' }));
 
       component.onSubmit();
 
@@ -159,14 +159,16 @@ describe('RegisterComponent', () => {
     });
 
     it('should handle successful registration', () => {
-      mockAuthService.register.and.returnValue(of({ success: true }));
+      mockAuthService.register.and.returnValue(of({ success: true, message: 'Inscription réussie' }));
 
       component.onSubmit();
 
       expect(mockLoadingService.setLoading).toHaveBeenCalledWith(true);
       expect(mockLoadingService.setLoading).toHaveBeenCalledWith(false);
-      expect(mockNotificationService.showSuccess).toHaveBeenCalledWith(
-        'Compte créé avec succès ! Veuillez vérifier votre email.'
+      expect(mockNotificationService.notify).toHaveBeenCalledWith(
+        'success',
+        'register.successMessage',
+        {}
       );
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
@@ -178,7 +180,11 @@ describe('RegisterComponent', () => {
       component.onSubmit();
 
       expect(mockLoadingService.setLoading).toHaveBeenCalledWith(false);
-      expect(mockNotificationService.showError).toHaveBeenCalledWith('Custom error message');
+      expect(mockNotificationService.notify).toHaveBeenCalledWith(
+        'error',
+        'register.error.custom',
+        { message: 'Custom error message' }
+      );
     });
 
     it('should handle 409 conflict error', () => {
@@ -187,8 +193,9 @@ describe('RegisterComponent', () => {
 
       component.onSubmit();
 
-      expect(mockNotificationService.showError).toHaveBeenCalledWith(
-        'Cette adresse email est déjà utilisée.'
+      expect(mockNotificationService.notify).toHaveBeenCalledWith(
+        'error',
+        'register.error.conflict'
       );
     });
 
@@ -198,8 +205,9 @@ describe('RegisterComponent', () => {
 
       component.onSubmit();
 
-      expect(mockNotificationService.showError).toHaveBeenCalledWith(
-        'Les données saisies ne sont pas valides.'
+      expect(mockNotificationService.notify).toHaveBeenCalledWith(
+        'error',
+        'register.error.validation'
       );
     });
 
@@ -209,8 +217,9 @@ describe('RegisterComponent', () => {
 
       component.onSubmit();
 
-      expect(mockNotificationService.showError).toHaveBeenCalledWith(
-        'Une erreur est survenue lors de la création du compte.'
+      expect(mockNotificationService.notify).toHaveBeenCalledWith(
+        'error',
+        'register.error.generic'
       );
     });
 
@@ -251,4 +260,4 @@ describe('RegisterComponent', () => {
       });
     });
   });
-}); 
+});

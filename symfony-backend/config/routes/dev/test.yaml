@@ -1,0 +1,4 @@
+test_api:
+  path: /test/api
+  controller: App/Test/Controller/TestController::apiTest
+  methods: [POST, GET]

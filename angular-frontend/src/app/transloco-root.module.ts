@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TRANSLOCO_CONFIG, TRANSLOCO_LOADER, translocoConfig, TranslocoModule } from '@ngneat/transloco';
 import { environment } from '../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { TranslocoHttpLoader } from '@ngneat/transloco-loader';
+import { TranslocoHttpLoader } from '../assets/i18n/transloco-loader';
 
 @NgModule({
   exports: [TranslocoModule],

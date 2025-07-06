@@ -1,0 +1,343 @@
+// Variables SCSS pour la cohérence du design
+:host {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --error-color: #dc2626;
+  --success-color: #059669;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --border-radius: 0.375rem;
+  --transition: all 0.15s ease-in-out;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-50);
+  padding: 3rem 1rem;
+
+  @media (min-width: 640px) {
+    padding: 3rem 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 3rem 2rem;
+  }
+}
+
+.register-card {
+  max-width: 28rem;
+  width: 100%;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+
+  @media (min-width: 640px) {
+    padding: 2.5rem;
+  }
+}
+
+.register-header {
+  margin-bottom: 2rem;
+
+  &__title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin: 0;
+  }
+
+  &__login-link {
+    font-weight: 500;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--primary-hover);
+    }
+
+    &:focus {
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+}
+
+.register-form {
+  &__field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    color: var(--gray-900);
+    background-color: white;
+    transition: var(--transition);
+    appearance: none;
+
+    &::placeholder {
+      color: var(--gray-500);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    &--error {
+      border-color: var(--error-color);
+
+      &:focus {
+        border-color: var(--error-color);
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+    }
+
+    &--with-icon {
+      padding-right: 2.5rem;
+    }
+  }
+
+  &__toggle-password {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-400);
+    transition: var(--transition);
+
+    &:hover {
+      color: var(--gray-600);
+    }
+
+    &:focus {
+      outline: none;
+      color: var(--primary-color);
+    }
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  &__checkbox-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__checkbox {
+    width: 1rem;
+    height: 1rem;
+    color: var(--primary-color);
+    border: 1px solid var(--gray-300);
+    border-radius: 0.25rem;
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+  }
+
+  &__checkbox-label {
+    font-size: 0.875rem;
+    color: var(--gray-900);
+    line-height: 1.4;
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: var(--transition);
+
+      &:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__submit-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+
+    &:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.error-message {
+  font-size: 0.75rem;
+  color: var(--error-color);
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &::before {
+    content: "⚠";
+    font-size: 0.875rem;
+  }
+}
+
+.loading-spinner {
+  margin-right: 0.5rem;
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register-card {
+  animation: fadeIn 0.3s ease-out;
+}
+
+// États responsive
+@media (max-width: 640px) {
+  .register-container {
+    padding: 1rem;
+  }
+
+  .register-card {
+    padding: 1.5rem;
+  }
+
+  .register-header__title {
+    font-size: 1.5rem;
+  }
+}
+
+// Mode sombre (optionnel)
+@media (prefers-color-scheme: dark) {
+  :host {
+    --gray-50: #0f172a;
+    --gray-100: #1e293b;
+    --gray-300: #475569;
+    --gray-400: #64748b;
+    --gray-500: #94a3b8;
+    --gray-600: #cbd5e1;
+    --gray-700: #e2e8f0;
+    --gray-900: #f1f5f9;
+  }
+
+  .register-card {
+    background-color: var(--gray-100);
+    border: 1px solid var(--gray-300);
+  }
+
+  .register-form__input {
+    background-color: var(--gray-100);
+    border-color: var(--gray-300);
+    color: var(--gray-900);
+
+    &::placeholder {
+      color: var(--gray-500);
+    }
+  }
+}
+
+// Utilitaires pour les composants enfants
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Focus visible pour l'accessibilité
+.focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
