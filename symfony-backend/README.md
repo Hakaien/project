@@ -10,7 +10,7 @@ Ce dossier contient la partie **backend** de l’application Angular/Symfony. L�
 - [🛣️ Routes exposées](#️-routes-exposées)
 - [📋 Prérequis serveur](#-prérequis-serveur)
 - [🚀 Lancement du projet](#-lancement-du-projet)
-- [🔑 Sécurité avancée (JWT, 2FA)](#-sécurité-avancée-jwt-2fa)
+- [🗄️ Mise à jour de la base de données (Doctrine Migrations)](#️-mise-à-jour-de-la-base-de-données-doctrine-migrations)
 - [🧪 Tests et documentation](#-tests-et-documentation)
 - [🔐 Gestion de la sécurité](#-gestion-de-la-sécurité)
 - [📎 Notes supplémentaires](#-notes-supplémentaires)
@@ -224,17 +224,51 @@ La double authentification (2FA) ajoute une couche de sécurité supplémentaire
 
 ---
 
+## 🗄️ Mise à jour de la base de données (Doctrine Migrations)
+
+Pour toute modification des entités (ajout/suppression de champs, nouvelles tables, etc.), il est nécessaire de :
+
+1. **Générer un fichier de migration**
+
+   ```bash
+   php bin/console make:migration
+   ```
+
+   > Cette commande crée un fichier dans `symfony-backend/migrations/` décrivant les changements à appliquer à la base.
+
+2. **Vérifier la migration générée**
+
+   - Relisez le fichier créé dans le dossier `migrations/` pour vous assurer que les instructions SQL correspondent bien à vos attentes.
+   - Ne jamais valider une migration non relue, surtout en production.
+
+3. **Appliquer la migration à la base de données**
+
+   ```bash
+   php bin/console doctrine:migrations:migrate
+   ```.
+
+   > Cette commande exécute les migrations en attente et met à jour la base de données.
+
+**Bonnes pratiques :**
+
+- Toujours versionner les fichiers de migration dans Git.
+- Ne jamais modifier une migration déjà exécutée en production : créez-en une nouvelle pour chaque évolution.
+- Testez vos migrations sur une base de test avant de les appliquer en production.
+- Sauvegardez la base de données avant toute migration en production.
+
+---
+
 ## 🧪 Tests et documentation
 
 - Les fichiers de test se trouvent dans le dossier :
 
-   ```docs
-   symfony-backend/src/Test/
-   ```
+  ```test
+  symfony-backend/src/Test/
+  ```
 
 - Le fichier d’explication des tests :
 
-  ```files
+  ```readme
   symfony-backend/src/Test/README.md
   ```
 
