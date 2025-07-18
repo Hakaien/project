@@ -1,0 +1,97 @@
+monolog:
+    channels: ['mailer', 'deprecation']
+
+    handlers:
+        # --- HANDLER PRINCIPAL ---
+        main:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            max_files: 15 # 15 jours de logs en prod, 4 jours en dev (voir override plus bas)
+            channels: ["!event", "!doctrine", "!mailer", "!deprecation", "!error", "!warning"]
+
+        # --- LOGS DES ERREURS ---
+        error:
+            type: rotating_file
+            path: "%kernel.logs_dir%/error.log"
+            level: error
+            max_files: 15
+            channels: ["!event", "!doctrine", "!deprecation"]
+
+        # --- LOGS DES WARNINGS ---
+        warning:
+            type: rotating_file
+            path: "%kernel.logs_dir%/warning.log"
+            level: warning
+            max_files: 3
+            channels: ["!event", "!doctrine", "!deprecation"]
+
+        # --- LOGS DES MAILS (DEV UNIQUEMENT) ---
+        mailer:
+            type: rotating_file
+            path: "%kernel.logs_dir%/mailer.log"
+            level: info
+            max_files: 3
+            channels: ["mailer"]
+
+        # --- LOGS DE DEPRECATION ---
+        deprecation:
+            type: rotating_file
+            path: "%kernel.logs_dir%/deprecation.log"
+            level: notice
+            max_files: 7
+            channels: ["deprecation"]
+
+        # --- LOGS CONSOLE ---
+        console:
+            type: console
+            process_psr_3_messages: true
+            channels: ["!event", "!doctrine"]
+
+        # --- LOGS CRITIQUES (FINGERS_CROSSED) ---
+        # Ce handler est activé uniquement en cas de log de niveau critique.
+        # Il utilise le type "fingers_crossed" pour ne pas écrire immédiatement dans le fichier,
+        # mais attendre qu'un message critique soit enregistré.
+        # Cela permet de ne pas remplir le fichier de logs avec des messages moins importants.
+        # Lorsqu'un message critique est enregistré, il déclenche le handler "nested" qui
+        # écrit les logs dans un fichier spécifique pour les messages critiques.
+        # Il est configuré pour ignorer les canaux "event" et "doctrine" pour éviter
+        # les logs de ces canaux dans le fichier critique.
+        # Le niveau d'action est défini sur "critical", ce qui signifie que seuls les
+        # messages de niveau critique déclencheront l'écriture dans le fichier.
+        # Le fichier de logs critiques est défini dans le handler "nested".
+        # Cela permet de centraliser les logs critiques dans un fichier séparé,
+        # facilitant ainsi la surveillance et le débogage des problèmes critiques.
+        critical:
+            type: fingers_crossed
+            action_level: critical
+            handler: nested
+            channels: ["!event", "!doctrine"]
+
+        # --- HANDLER NESTED POUR LES CRITIQUES ---
+        nested:
+            type: stream
+            path: "%kernel.logs_dir%/critical.log"
+            level: critical
+
+when@dev:
+    monolog:
+        handlers:
+            main:
+                max_files: 4 # 4 jours de logs en dev
+            error:
+                max_files: 4
+            warning:
+                max_files: 3
+            mailer:
+                max_files: 3
+
+when@prod:
+    monolog:
+        handlers:
+            main:
+                max_files: 15 # 15 jours de logs en prod
+            error:
+                max_files: 15
+            warning:
+                max_files: 3

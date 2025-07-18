@@ -172,11 +172,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     }
 
     /**
-     * Retourne la clé secrète TOTP.
+     * Retourne la configuration TOTP (Time-based One-Time Password).
      */
-    public function getTotpAuthenticationConfiguration(): ?string
+    public function getTotpAuthenticationConfiguration(): ?\Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration
     {
-        return $this->totpSecret;
+        if ($this->totpSecret === null) {
+            return null;
+        }
+        // period: 30 seconds, digits: 6, algorithm: 'sha1' are typical defaults
+        return new \Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration(
+            $this->totpSecret,
+            30, // period
+            6,  // digits
+            'sha1' // algorithm
+        );
     }
 
     public function setTotpSecret(?string $totpSecret): void
