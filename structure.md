@@ -16,10 +16,15 @@
 
 ## Projet global
 
+### global
+
 ├── .vscode/ {...}
 ├── deploy.sh
 ├── README.md
 ├── structure.md
+
+### angular
+
 ├── angular-frontend/
 │   ├── .angular/ {...}
 │   ├── .editorconfig
@@ -259,6 +264,9 @@
 │   │   ├── README.md
 │   │   ├── setup-jest.js
 │   │   └── test.utils.ts
+
+### symfony
+
 ├── symfony-backend/
 │   ├── .env
 │   ├── .env.dev
