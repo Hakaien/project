@@ -18,19 +18,26 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # Firewall pour le login
+        login:
+            pattern: ^/api/auth/login
+            stateless: true
+            json_login:
+                check_path: /api/auth/login
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        logout:
+            pattern: ^/api/auth/logout
+            stateless: true
+
         # Firewall pour l'API
         api:
             pattern: ^/api
             stateless: true
             jwt: ~
             entry_point: jwt
-            json_login:
-                check_path: /api/auth/login
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-            logout:
-                path: /api/auth/logout
-                target: /api/auth/logout
             
             # Configuration de l'authentification à deux facteurs
             two_factor:
