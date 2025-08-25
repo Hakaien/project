@@ -21,9 +21,18 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
+        '4f9a1929b39ff2a6c1016427077d16f5' => __DIR__ . '/..' . '/zenstruck/foundry/src/functions.php',
+        '21978ed596d07828c426dc898e1f08e0' => __DIR__ . '/..' . '/zenstruck/foundry/src/Persistence/functions.php',
+        'ca84a4c3e5f01954347851fa47eaeaee' => __DIR__ . '/..' . '/zenstruck/foundry/src/symfony_console.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'Zenstruck\\Foundry\\Psalm\\' => 24,
+            'Zenstruck\\Foundry\\' => 18,
+            'Zenstruck\\' => 10,
+        ),
         'U' => 
         array (
             'UAParser\\' => 9,
@@ -113,6 +122,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
             'Lcobucci\\JWT\\' => 13,
             'Lcobucci\\Clock\\' => 15,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
         'E' => 
         array (
             'Egulias\\EmailValidator\\' => 23,
@@ -128,10 +141,12 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
             'Doctrine\\Deprecations\\' => 22,
             'Doctrine\\DBAL\\' => 14,
             'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\DataFixtures\\' => 29,
             'Doctrine\\Common\\Collections\\' => 28,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\' => 16,
             'Doctrine\\Bundle\\MigrationsBundle\\' => 33,
+            'Doctrine\\Bundle\\FixturesBundle\\' => 31,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
         'C' => 
@@ -146,6 +161,18 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
     );
 
     public static $prefixDirsPsr4 = array (
+        'Zenstruck\\Foundry\\Psalm\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zenstruck/foundry/utils/psalm',
+        ),
+        'Zenstruck\\Foundry\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zenstruck/foundry/src',
+        ),
+        'Zenstruck\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zenstruck/assert/src',
+        ),
         'UAParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/ua-parser/uap-php/src',
@@ -409,6 +436,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         array (
             0 => __DIR__ . '/..' . '/lcobucci/clock/src',
         ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
+        ),
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
@@ -449,6 +480,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         array (
             0 => __DIR__ . '/..' . '/doctrine/lexer/src',
         ),
+        'Doctrine\\Common\\DataFixtures\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/data-fixtures/src',
+        ),
         'Doctrine\\Common\\Collections\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/collections/src',
@@ -464,6 +499,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         'Doctrine\\Bundle\\MigrationsBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-migrations-bundle/src',
+        ),
+        'Doctrine\\Bundle\\FixturesBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/doctrine-fixtures-bundle/src',
         ),
         'Doctrine\\Bundle\\DoctrineBundle\\' => 
         array (

@@ -20,4 +20,7 @@ return array(
     '2203a247e6fda86070a5e4e07aed533a' => $vendorDir . '/symfony/clock/Resources/now.php',
     'f598d06aa772fa33d905e87be6398fb1' => $vendorDir . '/symfony/polyfill-intl-idn/bootstrap.php',
     '9d2b9fc6db0f153a0a149fefb182415e' => $vendorDir . '/symfony/polyfill-php84/bootstrap.php',
+    '4f9a1929b39ff2a6c1016427077d16f5' => $vendorDir . '/zenstruck/foundry/src/functions.php',
+    '21978ed596d07828c426dc898e1f08e0' => $vendorDir . '/zenstruck/foundry/src/Persistence/functions.php',
+    'ca84a4c3e5f01954347851fa47eaeaee' => $vendorDir . '/zenstruck/foundry/src/symfony_console.php',
 );

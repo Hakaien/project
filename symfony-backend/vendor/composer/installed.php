@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c069ddef32974df53e10537adae200a1ed6ceb8a',
+        'reference' => '4e53197de1619cb9bb2c5fe4a66e1387c7abc231',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c069ddef32974df53e10537adae200a1ed6ceb8a',
+            'reference' => '4e53197de1619cb9bb2c5fe4a66e1387c7abc231',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -46,6 +46,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'doctrine/data-fixtures' => array(
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => 'f161e20f04ba5440a09330e156b40f04dd70d47f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../doctrine/data-fixtures',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'doctrine/dbal' => array(
             'pretty_version' => '3.9.5',
             'version' => '3.9.5.0',
@@ -72,6 +81,15 @@
             'install_path' => __DIR__ . '/../doctrine/doctrine-bundle',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'doctrine/doctrine-fixtures-bundle' => array(
+            'pretty_version' => '4.1.0',
+            'version' => '4.1.0.0',
+            'reference' => 'a06db6b81ff20a2980bf92063d80c013bb8b4b7c',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../doctrine/doctrine-fixtures-bundle',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'doctrine/doctrine-migrations-bundle' => array(
             'pretty_version' => '3.4.2',
@@ -162,6 +180,15 @@
             'install_path' => __DIR__ . '/../egulias/email-validator',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'fakerphp/faker' => array(
+            'pretty_version' => 'v1.24.1',
+            'version' => '1.24.1.0',
+            'reference' => 'e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../fakerphp/faker',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'lcobucci/clock' => array(
             'pretty_version' => '3.3.1',
@@ -298,8 +325,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache-implementation' => array(
@@ -877,6 +904,24 @@
             'install_path' => __DIR__ . '/../ua-parser/uap-php',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'zenstruck/assert' => array(
+            'pretty_version' => 'v1.5.1',
+            'version' => '1.5.1.0',
+            'reference' => '39554ce3a275fbf8c870b251e620101f644e9277',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../zenstruck/assert',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'zenstruck/foundry' => array(
+            'pretty_version' => 'v2.6.2',
+            'version' => '2.6.2.0',
+            'reference' => '942874e5e0a386749cb30e155e3e8ef4fd45754e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../zenstruck/foundry',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
     ),
 );
