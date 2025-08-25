@@ -3,6 +3,5 @@ when@dev: &dev
     zenstruck_foundry:
         make_factory:
             default_namespace: 'App\\Factory'
-            default_path: '%kernel.project_dir%/src/Factory'
 
 when@test: *dev
