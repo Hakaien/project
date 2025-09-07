@@ -43,6 +43,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $googleAuthenticatorSecret = null;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $lastLogin = null;
+
+    public function __construct()
+    {
+        // Initialisation des champs
+        $this->roles = [];
+        $this->isVerified = false;
+        $this->twoFactorEnabled = false;
+        $this->createdAt = new \DateTime();
+    }
+
     // Getters et setters standards
     public function getId(): ?int
     {
@@ -225,5 +240,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     }
     // ------------------- 
     // |||| 2FA END |||| //
+
+    // Méthodes pour la gestion des dates de création et de dernière connexion
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $lastLogin): void
+    {
+        $this->lastLogin = $lastLogin;
+    }
 
 }

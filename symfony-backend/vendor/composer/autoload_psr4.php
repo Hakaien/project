@@ -94,6 +94,6 @@ return array(
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Composer\\CaBundle\\' => array($vendorDir . '/composer/ca-bundle/src'),
-    'App\\Tests\\' => array($baseDir . '/tests'),
+    'App\\Tests\\' => array($baseDir . '/src/Tests'),
     'App\\' => array($baseDir . '/src'),
 );
