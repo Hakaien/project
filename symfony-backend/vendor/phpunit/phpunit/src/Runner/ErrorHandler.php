@@ -88,7 +88,7 @@ final class ErrorHandler
     /**
      * @throws NoTestCaseObjectOnCallStackException
      */
-    public function __invoke(int $errorNumber, string $errorString, string $errorFile, int $errorLine): bool
+    public function __invoke(int $errorNumber, string $errorString, string $errorFile, int $errorLine): false
     {
         $suppressed = (error_reporting() & ~self::INSUPPRESSIBLE_LEVELS) === 0;
 
@@ -212,7 +212,7 @@ final class ErrorHandler
         return false;
     }
 
-    public function deprecationHandler(int $errorNumber, string $errorString, string $errorFile, int $errorLine): bool
+    public function deprecationHandler(int $errorNumber, string $errorString, string $errorFile, int $errorLine): true
     {
         if ($this->testCaseContext !== null) {
             $this->testCaseContextDeprecations[$this->testCaseContext][] = [$errorNumber, $errorString, $errorFile, $errorLine];
@@ -225,7 +225,7 @@ final class ErrorHandler
 
     public function registerDeprecationHandler(): void
     {
-        set_error_handler([self::$instance, 'deprecationHandler'], E_USER_DEPRECATED);
+        set_error_handler([self::$instance, 'deprecationHandler'], E_USER_DEPRECATED | E_DEPRECATED);
     }
 
     public function restoreDeprecationHandler(): void

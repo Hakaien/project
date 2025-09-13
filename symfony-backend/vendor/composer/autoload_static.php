@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
+class ComposerStaticInit7478a86bbed082f7b4c8a721164a7eac
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -145,7 +145,6 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\DataFixtures\\' => 29,
             'Doctrine\\Common\\Collections\\' => 28,
-            'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\' => 16,
             'Doctrine\\Bundle\\MigrationsBundle\\' => 33,
             'Doctrine\\Bundle\\FixturesBundle\\' => 31,
@@ -469,7 +468,7 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         ),
         'Doctrine\\Inflector\\' => 
         array (
-            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
+            0 => __DIR__ . '/..' . '/doctrine/inflector/src',
         ),
         'Doctrine\\Deprecations\\' => 
         array (
@@ -490,10 +489,6 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         'Doctrine\\Common\\Collections\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/collections/src',
-        ),
-        'Doctrine\\Common\\Cache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
         ),
         'Doctrine\\Common\\' => 
         array (
@@ -1606,6 +1601,7 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         'PharIo\\Version\\VersionConstraintParser' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintParser.php',
         'PharIo\\Version\\VersionConstraintValue' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintValue.php',
         'PharIo\\Version\\VersionNumber' => __DIR__ . '/..' . '/phar-io/version/src/VersionNumber.php',
+        'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
         'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',
@@ -1839,9 +1835,9 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit74ab73114a599f4a2997b6a284f9e273::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit74ab73114a599f4a2997b6a284f9e273::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit74ab73114a599f4a2997b6a284f9e273::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7478a86bbed082f7b4c8a721164a7eac::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7478a86bbed082f7b4c8a721164a7eac::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7478a86bbed082f7b4c8a721164a7eac::$classMap;
 
         }, null, ClassLoader::class);
     }

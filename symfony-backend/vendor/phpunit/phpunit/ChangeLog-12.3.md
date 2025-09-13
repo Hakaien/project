@@ -2,6 +2,31 @@
 
 All notable changes of the PHPUnit 12.3 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [12.3.10] - 2025-09-11
+
+### Changed
+
+* [#6353](https://github.com/sebastianbergmann/phpunit/pull/6353): Disable performance optimization for tests requiring Xdebug
+* [#6357](https://github.com/sebastianbergmann/phpunit/pull/6357): Also collect `E_DEPRECATED` issues when building the test suite
+
+## [12.3.9] - 2025-09-11
+
+### Changed
+
+* Do not use `__sleep()` method (which will be deprecated in PHP 8.5)
+
+## [12.3.8] - 2025-09-03
+
+### Fixed
+
+* [#6340](https://github.com/sebastianbergmann/phpunit/issues/6340): Implicitly enabled display of deprecation details is not disabled when it should be
+
+## [12.3.7] - 2025-08-28
+
+### Changed
+
+* `#[IgnorePhpunitDeprecations]` is now considered for test runner deprecations (where applicable)
+
 ## [12.3.6] - 2025-08-20
 
 ### Changed
@@ -85,6 +110,10 @@ All notable changes of the PHPUnit 12.3 release series are documented in this fi
 * [#6229](https://github.com/sebastianbergmann/phpunit/issues/6229): `Configuration::excludeTestSuite()`, use `Configuration::excludeTestSuites()` instead
 * [#6246](https://github.com/sebastianbergmann/phpunit/issues/6246): Using `#[CoversNothing]` on a test method
 
+[12.3.10]: https://github.com/sebastianbergmann/phpunit/compare/12.3.9...12.3.10
+[12.3.9]: https://github.com/sebastianbergmann/phpunit/compare/12.3.8...12.3.9
+[12.3.8]: https://github.com/sebastianbergmann/phpunit/compare/12.3.7...12.3.8
+[12.3.7]: https://github.com/sebastianbergmann/phpunit/compare/12.3.6...12.3.7
 [12.3.6]: https://github.com/sebastianbergmann/phpunit/compare/12.3.5...12.3.6
 [12.3.5]: https://github.com/sebastianbergmann/phpunit/compare/12.3.4...12.3.5
 [12.3.4]: https://github.com/sebastianbergmann/phpunit/compare/12.3.3...12.3.4

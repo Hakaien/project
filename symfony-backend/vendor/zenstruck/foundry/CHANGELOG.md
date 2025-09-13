@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [v2.6.3](https://github.com/zenstruck/foundry/releases/tag/v2.6.3)
+
+August 28th, 2025 - [v2.6.2...v2.6.3](https://github.com/zenstruck/foundry/compare/v2.6.2...v2.6.3)
+
+* 67a7731 fix: misc fixes when creating objects in data provider (#972) by @nikophil
+* 5e068c4 fix: ignore PHPUnit warnings when dataprovider returns more data than test method accepts (#958) by @nikophil
+* 0a65872 Fix proxying of classes that have tenative return types (#962) by @BackEndTea
+* f9e95cb fix: doctrine deprecation (#961) by @nikophil
+* c8256e3 Add support for Symfony 8 (#960) by @Kocal
+
 ## [v2.6.2](https://github.com/zenstruck/foundry/releases/tag/v2.6.2)
 
 August 5th, 2025 - [v2.6.1...v2.6.2](https://github.com/zenstruck/foundry/compare/v2.6.1...v2.6.2)
