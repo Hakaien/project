@@ -49,12 +49,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $lastLogin = null;
 
+    // Champs pour le workflow de création d'utilisateur
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $passwordResetToken = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $passwordResetExpiresAt = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isPasswordSet = false;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $lastName = null;
+
     public function __construct()
     {
         // Initialisation des champs
         $this->roles = [];
         $this->isVerified = false;
         $this->twoFactorEnabled = false;
+        $this->isPasswordSet = false;
         $this->createdAt = new \DateTime();
     }
 
@@ -260,6 +277,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     public function setLastLogin(?\DateTimeInterface $lastLogin): void
     {
         $this->lastLogin = $lastLogin;
+    }
+
+    // Getters et setters pour le workflow de création d'utilisateur
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->passwordResetToken;
+    }
+
+    public function setPasswordResetToken(?string $passwordResetToken): void
+    {
+        $this->passwordResetToken = $passwordResetToken;
+    }
+
+    public function getPasswordResetExpiresAt(): ?\DateTimeInterface
+    {
+        return $this->passwordResetExpiresAt;
+    }
+
+    public function setPasswordResetExpiresAt(?\DateTimeInterface $passwordResetExpiresAt): void
+    {
+        $this->passwordResetExpiresAt = $passwordResetExpiresAt;
+    }
+
+    public function isPasswordSet(): bool
+    {
+        return $this->isPasswordSet;
+    }
+
+    public function setIsPasswordSet(bool $isPasswordSet): void
+    {
+        $this->isPasswordSet = $isPasswordSet;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function getFullName(): string
+    {
+        return trim($this->firstName . ' ' . $this->lastName);
     }
 
 }
