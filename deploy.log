@@ -1,0 +1,26 @@
+=== DÉPLOIEMENT DU Thu, Sep 18, 2025  9:31:38 PM ===
+[0;34m[2025-09-18 21:31:37] [INFO] Vérification des prérequis...[0m
+[0;32m[2025-09-18 21:31:37] [SUCCESS] Tous les prérequis sont satisfaits[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Phase 1 : Build Angular (production)...[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Dépendances déjà installées, skip npm install[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Nettoyage du cache Angular...[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Compilation Angular en mode production...[0m
+[0;32m[2025-09-18 21:31:37] [SUCCESS] Build Angular réussi[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Phase 2 : Déploiement vers Symfony...[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Nettoyage de symfony-backend/public...[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Copie des fichiers Angular vers Symfony...[0m
+[0;32m[2025-09-18 21:31:37] [SUCCESS] Déploiement vers Symfony réussi[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Phase 3 : Versioning des assets...[0m
+[0;34m[2025-09-18 21:31:37] [INFO] 3 fichier(s) versionné(s)[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Génération du manifest.json...[0m
+[0;32m[2025-09-18 21:31:37] [SUCCESS] Manifest.json généré[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Phase 4 : Vérifications finales...[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Taille d'index.html : 25414 bytes[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Nombre d'assets copiés : 6[0m
+[0;32m[2025-09-18 21:31:37] [SUCCESS] Vérifications finales terminées[0m
+[0;32m[2025-09-18 21:31:37] [SUCCESS] 🎉 Déploiement terminé avec succès ![0m
+[0;34m[2025-09-18 21:31:37] [INFO] Logs disponibles dans : /c/Users/rmena/Desktop/React/mon-projet/deploy.log[0m
+[0;34m[2025-09-18 21:31:37] [INFO] Dossier public Symfony : symfony-backend/public[0m
+[0;34m[2025-09-18 21:31:37] [INFO] 📊 Statistiques du déploiement :[0m
+[0;34m[2025-09-18 21:31:37] [INFO]   - Fichiers dans le dossier public : 6[0m
+[0;34m[2025-09-18 21:31:37] [INFO]   - Taille totale : 468K[0m

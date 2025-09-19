@@ -69,6 +69,10 @@ security:
         - { path: ^/api/auth/login, role: PUBLIC_ACCESS }
         - { path: ^/api/auth/set-password, role: PUBLIC_ACCESS }
         - { path: ^/api/auth/forgot-password, role: PUBLIC_ACCESS }
+        - { path: ^/api/auth/setup-2fa, role: PUBLIC_ACCESS }
+        
+        # Routes 2FA API
+        - { path: ^/api/2fa, role: IS_AUTHENTICATED_FULLY }
         
         # Routes d'administration (admin uniquement)
         - { path: ^/api/admin, roles: ROLE_ADMIN }

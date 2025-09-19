@@ -1,0 +1,14 @@
+{
+  "register": {
+    "successMessage": "Compte créé avec succès ! Veuillez vérifier votre email.",
+    "error": {
+      "custom": "{{message}}",
+      "conflict": "Cette adresse email est déjà utilisée.",
+      "validation": "Les données saisies ne sont pas valides.",
+      "generic": "Une erreur est survenue lors de la création du compte."
+    }
+  },
+  "actions": {
+    "close": "Fermer"
+  }
+}
