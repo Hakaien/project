@@ -1,1 +1,76 @@
-<p>dashboard works!</p>
+<div class="min-h-screen bg-gray-50">
+  <!-- Navigation -->
+  <nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-xl font-semibold text-gray-900">Tableau de bord</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-700">
+            Connecté en tant que {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+          </span>
+          <button
+            *ngIf="authService.isAdmin()"
+            (click)="goToAdmin()"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+          >
+            Administration
+          </button>
+          <button
+            (click)="logout()"
+            class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+          >
+            Déconnexion
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+      <div class="border-4 border-dashed border-gray-200 rounded-lg p-8">
+        <div class="text-center">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            Bienvenue sur votre tableau de bord !
+          </h2>
+          <p class="text-gray-600 mb-8">
+            Vous êtes connecté avec succès à l'application.
+          </p>
+
+          <div class="bg-white overflow-hidden shadow rounded-lg max-w-md mx-auto">
+            <div class="p-5">
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <div class="h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center">
+                    <span class="text-sm font-medium text-white">
+                      {{ currentUser?.firstName?.charAt(0) }}{{ currentUser?.lastName?.charAt(0) }}
+                    </span>
+                  </div>
+                </div>
+                <div class="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt class="text-sm font-medium text-gray-500 truncate">
+                      Informations du compte
+                    </dt>
+                    <dd class="text-lg font-medium text-gray-900">
+                      {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+                    </dd>
+                    <dd class="text-sm text-gray-500">
+                      {{ currentUser?.email }}
+                    </dd>
+                    <dd class="text-xs text-gray-400 mt-1">
+                      Rôles: {{ currentUser?.roles?.join(', ') }}
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

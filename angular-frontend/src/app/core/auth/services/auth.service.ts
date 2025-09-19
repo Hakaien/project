@@ -103,8 +103,32 @@ export class AuthService {
   /**
    * Demande de réinitialisation de mot de passe
    */
-  forgotPassword(data: ForgotPasswordRequest): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.API_URL}/forgot-password`, data).pipe(
+  forgotPassword(email: string): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.API_URL}/forgot-password`, { email }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  /**
+   * Définir le mot de passe initial avec un token
+   */
+  setPassword(token: string, password: string): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.API_URL}/set-password`, {
+      token,
+      password
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  /**
+   * Configurer la double authentification
+   */
+  setup2FA(method: string, authCode: string): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.API_URL}/setup-2fa`, {
+      method,
+      authCode
+    }).pipe(
       catchError(error => this.handleError(error))
     );
   }

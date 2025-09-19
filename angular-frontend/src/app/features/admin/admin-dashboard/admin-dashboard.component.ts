@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/auth/services/auth.service';
+import { AuthService } from '../../../core/auth/services/auth.service';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-admin-dashboard',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit {
   currentUser: any = null;
 
   constructor(
-    public authService: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -22,8 +22,8 @@ export class DashboardComponent implements OnInit {
     this.currentUser = this.authService.currentUser;
   }
 
-  goToAdmin(): void {
-    this.router.navigate(['/admin']);
+  goToUserManagement(): void {
+    this.router.navigate(['/admin/users']);
   }
 
   logout(): void {

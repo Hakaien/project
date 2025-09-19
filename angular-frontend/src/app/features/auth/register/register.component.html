@@ -1,194 +1,40 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
-    <!-- Header -->
     <div>
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Créer un compte
+        Inscription
       </h2>
       <p class="mt-2 text-center text-sm text-gray-600">
-        Ou
-        <button
-          type="button"
-          (click)="navigateToLogin()"
-          class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-          connectez-vous si vous avez déjà un compte
-        </button>
+        L'inscription se fait uniquement par invitation administrateur
       </p>
     </div>
 
-    <!-- Form -->
-    <form class="mt-8 space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="space-y-4">
-        <!-- Prénom -->
-        <div>
-          <label for="firstName" class="block text-sm font-medium text-gray-700">
-            Prénom
-          </label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            autocomplete="given-name"
-            formControlName="firstName"
-            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            [class.border-red-300]="firstName?.invalid && firstName?.touched"
-            placeholder="Votre prénom">
-
-          <app-input-error
-            *ngIf="firstName?.invalid && firstName?.touched"
-            [control]="firstName">
-          </app-input-error>
+    <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+          </svg>
         </div>
-
-        <!-- Nom -->
-        <div>
-          <label for="lastName" class="block text-sm font-medium text-gray-700">
-            Nom
-          </label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            autocomplete="family-name"
-            formControlName="lastName"
-            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            [class.border-red-300]="lastName?.invalid && lastName?.touched"
-            placeholder="Votre nom">
-
-          <app-input-error
-            *ngIf="lastName?.invalid && lastName?.touched"
-            [control]="lastName">
-          </app-input-error>
-        </div>
-
-        <!-- Email -->
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">
-            Adresse email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            formControlName="email"
-            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            [class.border-red-300]="email?.invalid && email?.touched"
-            placeholder="votre@email.com">
-
-          <app-input-error
-            *ngIf="email?.invalid && email?.touched"
-            [control]="email">
-          </app-input-error>
-        </div>
-
-        <!-- Mot de passe -->
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">
-            Mot de passe
-          </label>
-          <div class="mt-1 relative">
-            <input
-              id="password"
-              name="password"
-              [type]="showPassword ? 'text' : 'password'"
-              autocomplete="new-password"
-              formControlName="password"
-              class="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              [class.border-red-300]="password?.invalid && password?.touched"
-              placeholder="Mot de passe">
-
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center">
-              <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path *ngIf="!showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path *ngIf="!showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                <path *ngIf="showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-              </svg>
-            </button>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-blue-800">
+            Inscription par invitation
+          </h3>
+          <div class="mt-2 text-sm text-blue-700">
+            <p>Pour créer un compte, vous devez recevoir une invitation de l'administrateur. Cette invitation contiendra un lien pour définir votre mot de passe et configurer votre compte.</p>
           </div>
-
-          <app-input-error
-            *ngIf="password?.invalid && password?.touched"
-            [control]="password">
-          </app-input-error>
-        </div>
-
-        <!-- Confirmation mot de passe -->
-        <div>
-          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
-            Confirmer le mot de passe
-          </label>
-          <div class="mt-1 relative">
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              [type]="showConfirmPassword ? 'text' : 'password'"
-              autocomplete="new-password"
-              formControlName="confirmPassword"
-              class="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              [class.border-red-300]="(confirmPassword?.invalid && confirmPassword?.touched) || (registerForm.hasError('passwordMismatch') && confirmPassword?.touched)"
-              placeholder="Confirmer le mot de passe">
-
-            <button
-              type="button"
-              (click)="toggleConfirmPasswordVisibility()"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center">
-              <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path *ngIf="!showConfirmPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path *ngIf="!showConfirmPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                <path *ngIf="showConfirmPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-              </svg>
-            </button>
-          </div>
-
-          <div *ngIf="registerForm.hasError('passwordMismatch') && confirmPassword?.touched" class="mt-1 text-sm text-red-600">
-            Les mots de passe ne correspondent pas
-          </div>
-
-          <app-input-error
-            *ngIf="confirmPassword?.invalid && confirmPassword?.touched && !registerForm.hasError('passwordMismatch')"
-            [control]="confirmPassword">
-          </app-input-error>
-        </div>
-
-        <!-- Accepter les conditions -->
-        <div class="flex items-center">
-          <input
-            id="acceptTerms"
-            name="acceptTerms"
-            type="checkbox"
-            formControlName="acceptTerms"
-            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-          <label for="acceptTerms" class="ml-2 block text-sm text-gray-900">
-            J'accepte les
-            <a href="#" class="text-indigo-600 hover:text-indigo-500">conditions d'utilisation</a>
-            et la
-            <a href="#" class="text-indigo-600 hover:text-indigo-500">politique de confidentialité</a>
-          </label>
-        </div>
-        <div *ngIf="acceptTerms?.invalid && acceptTerms?.touched" class="text-sm text-red-600">
-          Vous devez accepter les conditions d'utilisation
         </div>
       </div>
+    </div>
 
-      <!-- Submit Button -->
-      <div>
-        <button
-          type="submit"
-          [disabled]="registerForm.invalid || (isLoading$ | async)"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ease-in-out">
-
-          <app-loading-spinner
-            *ngIf="isLoading$ | async"
-            class="mr-2">
-          </app-loading-spinner>
-
-          {{ (isLoading$ | async) ? 'Création en cours...' : 'Créer mon compte' }}
-        </button>
-      </div>
-    </form>
+    <div class="text-center">
+      <button
+        type="button"
+        (click)="goToLogin()"
+        class="font-medium text-indigo-600 hover:text-indigo-500"
+      >
+        Retour à la connexion
+      </button>
+    </div>
   </div>
 </div>

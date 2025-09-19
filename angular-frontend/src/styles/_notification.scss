@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .snackbar-success {
   background-color: $color-success;
   color: $color-text-light;

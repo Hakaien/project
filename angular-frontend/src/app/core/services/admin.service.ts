@@ -1,45 +1,104 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User } from './auth.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
-export interface CreateUserRequest {
+interface CreateUserRequest {
   email: string;
   firstName: string;
   lastName: string;
 }
 
-export interface UpdateUserRequest {
-  firstName?: string;
-  lastName?: string;
-  roles?: string[];
+interface User {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roles: string[];
+  isPasswordSet: boolean;
+  isVerified: boolean;
+  twoFactorEnabled: boolean;
+  createdAt: string;
+  lastLogin: string | null;
+}
+
+interface UsersResponse {
+  users: User[];
+}
+
+interface CreateUserResponse {
+  message: string;
+  user: User;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  private readonly API_URL = '/api';
+  private readonly API_URL = `${environment.apiUrl}/admin`;
 
   constructor(private http: HttpClient) {}
 
-  createUser(userData: CreateUserRequest): Observable<any> {
-    return this.http.post(`${this.API_URL}/admin/users`, userData);
+  /**
+   * Récupérer la liste des utilisateurs
+   */
+  getUsers(): Observable<UsersResponse> {
+    return this.http.get<UsersResponse>(`${this.API_URL}/users`).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
-  getUsers(): Observable<{ users: User[] }> {
-    return this.http.get<{ users: User[] }>(`${this.API_URL}/admin/users`);
+  /**
+   * Créer un nouvel utilisateur
+   */
+  createUser(userData: CreateUserRequest): Observable<CreateUserResponse> {
+    return this.http.post<CreateUserResponse>(`${this.API_URL}/users`, userData).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
+  /**
+   * Récupérer un utilisateur par ID
+   */
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(`${this.API_URL}/admin/users/${id}`);
+    return this.http.get<User>(`${this.API_URL}/users/${id}`).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
-  updateUser(id: number, userData: UpdateUserRequest): Observable<any> {
-    return this.http.put(`${this.API_URL}/admin/users/${id}`, userData);
+  /**
+   * Mettre à jour un utilisateur
+   */
+  updateUser(id: number, userData: Partial<CreateUserRequest>): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(`${this.API_URL}/users/${id}`, userData).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
-  deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.API_URL}/admin/users/${id}`);
+  /**
+   * Supprimer un utilisateur
+   */
+  deleteUser(id: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.API_URL}/users/${id}`).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  /**
+   * Gère les erreurs HTTP
+   */
+  private handleError(error: any): Observable<never> {
+    let errorMessage = 'Une erreur est survenue';
+
+    if (error.error?.error) {
+      errorMessage = error.error.error;
+    } else if (error.error?.message) {
+      errorMessage = error.error.message;
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
+    return throwError(errorMessage);
   }
 }
