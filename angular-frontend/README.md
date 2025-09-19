@@ -69,6 +69,14 @@ Adaptez ces fichiers pour pointer vers le backend ou les services externes souha
 - Les composants routés doivent être déclarés avec `standalone: true`.
 - Les modules `AppModule` et `AppRoutingModule` ne sont plus utilisés.
 
+### Note sur `src/app/app-routing.module.ts`
+
+Le fichier `src/app/app-routing.module.ts` peut apparaître dans le dépôt (généré par un squelette). Dans ce projet il est volontairement laissé vide et commenté parce que le routing est fourni via `provideRouter(appRoutes)` au moment du bootstrap (voir `src/main.ts` et `src/app/app.routes.ts`).
+
+Nous conservons le fichier pour la sécurité / compatibilité historique. Si vous préférez nettoyer, il est sans danger de le supprimer, mais garder le commentaire aide les nouveaux contributeurs.
+
+Un test basique de `app.routes` est présent dans `src/app/app.routes.spec.ts` pour vérifier que les redirections et routes clés existent.
+
 ---
 
 ## Génération de code

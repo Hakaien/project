@@ -1,11 +1,9 @@
-// Variables SCSS optimisées
+// Compact and Tailwind-first styles for the register page
 :host {
   --primary-color: #4f46e5;
   --primary-hover: #4338ca;
-  --error-color: #dc2626;
 }
 
-// Styles optimisés - utiliser Tailwind pour la plupart des styles
 .register-container {
   min-height: 100vh;
   @apply flex items-center justify-center bg-gray-50 p-12 sm:p-16 lg:p-20;
@@ -13,156 +11,30 @@
 
 .register-card {
   @apply max-w-md w-full bg-white rounded-lg shadow-md p-8 sm:p-10;
-}
-
-.register-header {
-  @apply mb-8;
-
-  &__title {
-    @apply text-3xl font-extrabold text-gray-900 text-center mb-2 leading-tight;
-  }
-
-  &__subtitle {
-    @apply text-center text-sm text-gray-600 m-0;
-  }
-
-  &__login-link {
-    @apply font-medium text-indigo-600 no-underline transition-colors cursor-pointer;
-
-    &:hover {
-      color: var(--primary-hover);
-    }
-
-    &:focus {
-      @apply outline-none underline;
-    }
-  }
-}
-
-.register-form {
-  &__field-group {
-    @apply flex flex-col gap-4 mb-6;
-  }
-
-  &__field {
-    @apply flex flex-col;
-  }
-
-  &__label {
-    @apply text-sm font-medium text-gray-700 mb-1 block;
-  }
-
-  &__input-wrapper {
-    @apply relative;
-  }
-
-  &__input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-900 bg-white transition-colors appearance-none;
-
-    &::placeholder {
-      @apply text-gray-500;
-    }
-
-    &:focus {
-      @apply outline-none border-indigo-600 ring-1 ring-indigo-600;
-    }
-
-    &--error {
-      @apply border-red-600;
-
-      &:focus {
-        @apply border-red-600 ring-1 ring-red-600;
-      }
-    }
-
-    &--with-icon {
-      @apply pr-10;
-    }
-  }
-
-  &__toggle-password {
-    @apply absolute right-0 top-0 bottom-0 flex items-center px-3 bg-transparent border-0 cursor-pointer text-gray-400 transition-colors;
-
-    &:hover {
-      @apply text-gray-600;
-    }
-
-    &:focus {
-      @apply outline-none text-indigo-600;
-    }
-
-    svg {
-      @apply w-5 h-5;
-    }
-  }
-
-  &__checkbox-field {
-    @apply flex items-start gap-2 mb-6;
-  }
-
-  &__checkbox {
-    @apply w-4 h-4 text-indigo-600 border border-gray-300 rounded mt-0.5 flex-shrink-0;
-
-    &:focus {
-      @apply outline-none ring-1 ring-indigo-600;
-    }
-  }
-
-  &__checkbox-label {
-    @apply text-sm text-gray-900 leading-snug;
-
-    a {
-      @apply text-indigo-600 no-underline transition-colors;
-
-      &:hover {
-        color: var(--primary-hover);
-        @apply underline;
-      }
-    }
-  }
-
-  &__submit-button {
-    @apply w-full flex items-center justify-center px-4 py-3 bg-indigo-600 text-white border-0 rounded-md text-sm font-medium cursor-pointer transition-colors relative;
-
-    &:hover:not(:disabled) {
-      background-color: var(--primary-hover);
-    }
-
-    &:focus {
-      @apply outline-none ring-2 ring-indigo-600 ring-offset-2;
-    }
-
-    &:disabled {
-      @apply opacity-50 cursor-not-allowed;
-    }
-  }
-}
-
-.error-message {
-  @apply text-xs text-red-600 mt-1 flex items-center gap-1;
-
-  &::before {
-    content: "⚠";
-    @apply text-sm;
-  }
-}
-
-.loading-spinner {
-  @apply mr-2;
-}
-
-// Animation simple
-.register-card {
   animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+.register-header__title { @apply text-3xl font-extrabold text-gray-900 text-center mb-2 leading-tight; }
+.register-header__subtitle { @apply text-center text-sm text-gray-600 m-0; }
+.register-header__login-link { @apply font-medium text-indigo-600 no-underline transition-colors cursor-pointer; }
+.register-header__login-link:hover { color: var(--primary-hover); }
+
+.register-form__field-group { @apply flex flex-col gap-4 mb-6; }
+.register-form__label { @apply text-sm font-medium text-gray-700 mb-1 block; }
+.register-form__input-wrapper { @apply relative; }
+.register-form__input { @apply w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-900 bg-white transition-colors appearance-none; }
+.register-form__input:focus { @apply outline-none border-indigo-600 ring-1 ring-indigo-600; }
+.register-form__input--error { @apply border-red-600; }
+.register-form__input--with-icon { @apply pr-10; }
+.register-form__toggle-password { @apply absolute right-0 top-0 bottom-0 flex items-center px-3 bg-transparent border-0 cursor-pointer text-gray-400; }
+.register-form__checkbox-field { @apply flex items-start gap-2 mb-6; }
+.register-form__checkbox { @apply w-4 h-4 text-indigo-600 border border-gray-300 rounded mt-0.5 flex-shrink-0; }
+.register-form__checkbox-label { @apply text-sm text-gray-900 leading-snug; }
+.register-form__submit-button { @apply w-full flex items-center justify-center px-4 py-3 bg-indigo-600 text-white rounded-md text-sm font-medium; }
+.register-form__submit-button:hover:not(:disabled) { background-color: var(--primary-hover); }
+
+.error-message { @apply text-xs text-red-600 mt-1 flex items-center gap-1; }
+.error-message::before { content: "⚠"; @apply text-sm; }
+.loading-spinner { @apply mr-2; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }

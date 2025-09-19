@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/f
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputErrorComponent } from '../input-error/input-error.component';
-import { AutofocusDirective } from '../../directives/autofocus.directive';
+import { AutofocusDirective } from '../../../directives/autofocus.directive';
 
 @Component({
   selector: 'app-input-text',
@@ -69,11 +69,11 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   }
 
   get inputId(): string {
-    return `input-text-${Math.random().toString(36).substr(2, 9)}`;
+    return `input-text-${Math.random().toString(36).slice(2, 11)}`;
   }
 
   get hasError(): boolean {
-    return !!(this.control && this.control.errors && this.control.touched);
+    return !!(this.control?.errors && this.control?.touched);
   }
 
   get inputClasses(): string {
