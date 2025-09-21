@@ -1,32 +1,38 @@
 <?php
-
 namespace App\DataFixtures;
 
-use App\Tests\Fixtures\TestUserFactory;
+use App\DataFixtures\Users\UserFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
+    public static function getGroups(): array
+    {
+        return ['app']; // Groupe pour charger toute l'application
+    }
 
-    public function __construct(
-        private UserPasswordHasherInterface $passwordHasher
-    )
-    {}
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
 
     public function load(ObjectManager $manager): void
     {
-        // Crée un admin
-        TestUserFactory::new($this->passwordHasher)
-            ->asAdmin()
-            ->create();
-
-        // Crée 5 utilisateurs avec 2FA TOTP
-        TestUserFactory::new($this->passwordHasher)
-            ->withTwoFactor('totp')
-            ->createMany(5);
-
-        $manager->flush();
+        // Cette fixture peut charger d'autres données qui dépendent des utilisateurs
+        // Par exemple : des posts, des catégories, etc.
+        
+        echo "🚀 Application initialisée avec succès!\n";
+        echo "📊 Données chargées:\n";
+        
+        // Exemple d'utilisation des références créées par les autres fixtures :
+        // $admin = $this->getReference(AdminFixtures::ADMIN_USER_REFERENCE);
+        // $regularUser = $this->getReference(RegularUsersFixtures::REGULAR_USERS_REFERENCE . '_1');
+        
+        // TODO: Ajouter ici d'autres fixtures pour posts, categories, etc.
     }
 }

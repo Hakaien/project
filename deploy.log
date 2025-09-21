@@ -1,8 +1,32 @@
-=== DÉPLOIEMENT DU Fri, Sep 19, 2025  1:52:53 PM ===
-[0;34m[2025-09-19 13:52:53] [INFO] Vérification des prérequis...[0m
-[0;32m[2025-09-19 13:52:53] [SUCCESS] Tous les prérequis sont satisfaits[0m
-[0;34m[2025-09-19 13:52:53] [INFO] Phase 1 : Build Angular (production)...[0m
-[0;34m[2025-09-19 13:52:53] [INFO] Dépendances déjà installées[0m
-[0;34m[2025-09-19 13:52:53] [INFO] Nettoyage du cache Angular...[0m
-[0;34m[2025-09-19 13:52:53] [INFO] Compilation Angular en mode production...[0m
-[0;31m[2025-09-19 13:52:53] [ERROR] Dossier de build introuvable : angular-frontend/dist/browser[0m
+=== DÉPLOIEMENT DU Sun, Sep 21, 2025  1:12:04 PM ===
+[0;34m[2025-09-21 13:12:03] [INFO] Vérification des prérequis...[0m
+[0;32m[2025-09-21 13:12:03] [SUCCESS] Tous les prérequis sont satisfaits[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Phase 1 : Build Angular (production)...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Dépendances déjà installées[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Nettoyage du cache Angular...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Compilation Angular en mode production...[0m
+[0;32m[2025-09-21 13:12:03] [SUCCESS] Build Angular réussi[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Phase 2 : Déploiement vers Symfony...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Nettoyage de symfony-backend/public...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Débogage - Chemin source Angular : /c/wamp64/www/Projets_test/project_default/angular-frontend/dist/browser[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Débogage - Contenu du dossier source :[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Copie des fichiers Angular vers Symfony...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Débogage - Contenu copié dans Symfony public :[0m
+[0;32m[2025-09-21 13:12:03] [SUCCESS] Déploiement vers Symfony réussi[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Phase 3 : Configuration web optimisée...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Création du fichier .htaccess d'optimisation...[0m
+[0;32m[2025-09-21 13:12:03] [SUCCESS] Fichier .htaccess créé[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Configuration web optimisée terminée[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Phase 4 : Vérifications finales...[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Taille d'index.html : 26924 bytes[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Nombre total d'assets : 3[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Fichiers JS : 2[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Fichiers CSS : 1[0m
+[1;33m[2025-09-21 13:12:03] [WARNING] Fichier main.js non trouvé, vérifiez le build[0m
+[0;32m[2025-09-21 13:12:03] [SUCCESS] Vérifications finales terminées[0m
+[0;32m[2025-09-21 13:12:03] [SUCCESS] 🎉 Déploiement terminé avec succès ![0m
+[0;34m[2025-09-21 13:12:03] [INFO] Logs disponibles dans : /c/wamp64/www/Projets_test/project_default/deploy.log[0m
+[0;34m[2025-09-21 13:12:03] [INFO] Dossier public Symfony : symfony-backend/public[0m
+[0;34m[2025-09-21 13:12:03] [INFO] 📊 Statistiques du déploiement :[0m
+[0;34m[2025-09-21 13:12:03] [INFO]   - Fichiers dans le dossier public : 6[0m
+[0;34m[2025-09-21 13:12:03] [INFO]   - Taille totale : 584K[0m

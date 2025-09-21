@@ -59,12 +59,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     #[ORM\Column(type: 'boolean')]
     private bool $isPasswordSet = false;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $firstName = null;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $lastName = null;
-
     public function __construct()
     {
         // Initialisation des champs
@@ -100,7 +94,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
+    
+        if (!in_array('ROLE_ADMIN', $roles) && 
+            !in_array('ROLE_SUPER_ADMIN', $roles) && 
+            !in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+    
         return array_unique($roles);
     }
 
@@ -308,31 +308,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
     public function setIsPasswordSet(bool $isPasswordSet): void
     {
         $this->isPasswordSet = $isPasswordSet;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(?string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(?string $lastName): void
-    {
-        $this->lastName = $lastName;
-    }
-
-    public function getFullName(): string
-    {
-        return trim($this->firstName . ' ' . $this->lastName);
     }
 
 }

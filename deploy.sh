@@ -125,11 +125,14 @@ build_angular() {
         exit 1
     fi
 
-    # Vérifier que le build a réussi
-    local build_output_dir="$ANGULAR_DIR/dist/browser"
+    # CORRECTION : Utiliser un chemin relatif car nous sommes dans $ANGULAR_DIR
+    local build_output_dir="dist/browser"
 
     if [ ! -d "$build_output_dir" ]; then
         log_error "Dossier de build introuvable : $build_output_dir"
+        log_info "Répertoire courant : $(pwd)"
+        log_info "Contenu disponible :"
+        ls -la
         exit 1
     fi
 
@@ -169,6 +172,17 @@ deploy_to_symfony() {
     # Copier tous les fichiers du build Angular
     local angular_build_path="$PROJECT_ROOT/$ANGULAR_DIR/dist/browser"
 
+    # AJOUT DE DÉBOGAGE
+    log_info "Débogage - Chemin source Angular : $angular_build_path"
+    log_info "Débogage - Contenu du dossier source :"
+    if [ -d "$angular_build_path" ]; then
+        ls -la "$angular_build_path/"
+    else
+        log_error "Le dossier source n'existe pas !"
+        log_info "Débogage - Contenu de $PROJECT_ROOT/$ANGULAR_DIR/dist/ :"
+        ls -la "$PROJECT_ROOT/$ANGULAR_DIR/dist/" 2>/dev/null || echo "Dossier dist non trouvé"
+    fi
+
     if [ ! -d "$angular_build_path" ]; then
         log_error "Dossier de build Angular introuvable : $angular_build_path"
         exit 1
@@ -178,6 +192,10 @@ deploy_to_symfony() {
     
     # Copier le contenu du dossier dist vers public
     cp -r "$angular_build_path"/* "$SYMFONY_PUBLIC_DIR/"
+
+    # DÉBOGAGE APRÈS COPIE
+    log_info "Débogage - Contenu copié dans Symfony public :"
+    ls -la "$SYMFONY_PUBLIC_DIR/"
 
     # Vérifier que index.html a été copié
     if [ ! -f "$SYMFONY_PUBLIC_DIR/index.html" ]; then
