@@ -1,0 +1,34 @@
+/* app.component.scss - Styles de base avec Tailwind */
+
+// Import des styles globaux si nécessaire
+// @import 'styles/variables';
+
+// Styles spécifiques au composant racine
+:host {
+  display: block;
+  height: 100%;
+
+  // Utilisation de Tailwind pour la cohérence
+  @apply min-h-screen bg-gray-50;
+}
+
+// Animation de transition entre routes (optionnel)
+router-outlet {
+  display: block;
+
+  // Animation smooth lors du changement de route
+  & + * {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

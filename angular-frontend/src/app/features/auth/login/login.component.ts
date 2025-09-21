@@ -17,15 +17,18 @@ export class LoginComponent {
   errorMessage = '';
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+
+  get emailControl() { return this.loginForm.get('email'); }
+  get passwordControl() { return this.loginForm.get('password'); }
 
   onSubmit(): void {
     if (this.loginForm.valid) {

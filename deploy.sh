@@ -2,8 +2,7 @@
 
 # =============================================================================
 # Script de déploiement optimisé pour Angular + Symfony
-# Version: 2.0.0
-# Auteur: Optimisé selon les bonnes pratiques
+# Version: 2.1.0 - Corrigé pour structure avec dossier backend
 # =============================================================================
 
 set -euo pipefail  # Arrêt sur erreur, variables non définies, erreurs dans les pipes
@@ -19,11 +18,11 @@ readonly BLUE='\033[0;34m'
 readonly YELLOW='\033[1;33m'
 readonly NC='\033[0m' # No Color
 
-# Chemins du projet
+# Chemins du projet (adaptés à votre structure)
 readonly PROJECT_ROOT="$(pwd)"
 readonly ANGULAR_DIR="angular-frontend"
+readonly SYMFONY_BACKEND_DIR="symfony-backend"
 readonly SYMFONY_PUBLIC_DIR="symfony-backend/public"
-readonly ASSETS_SUBDIR="assets"
 
 # Configuration du logging
 readonly LOG_FILE="${PROJECT_ROOT}/deploy.log"
@@ -38,7 +37,7 @@ log() {
     local level="$1"
     local message="$2"
     local color="$3"
-    
+
     echo -e "${color}[${TIMESTAMP}] [${level}] ${message}${NC}" | tee -a "$LOG_FILE"
 }
 
@@ -61,7 +60,6 @@ log_error() {
 # Fonction de nettoyage en cas d'erreur
 cleanup() {
     log_error "Erreur détectée. Nettoyage en cours..."
-    # Ici on pourrait ajouter des actions de nettoyage si nécessaire
     exit 1
 }
 
@@ -71,25 +69,25 @@ trap cleanup ERR INT TERM
 # Vérification des prérequis
 check_prerequisites() {
     log_info "Vérification des prérequis..."
-    
+
     # Vérifier Node.js
     if ! command -v node &> /dev/null; then
         log_error "Node.js n'est pas installé"
         exit 1
     fi
-    
+
     # Vérifier npm
     if ! command -v npm &> /dev/null; then
         log_error "npm n'est pas installé"
         exit 1
     fi
-    
+
     # Vérifier Angular CLI
     if ! command -v npx &> /dev/null; then
         log_error "npx n'est pas disponible"
         exit 1
     fi
-    
+
     log_success "Tous les prérequis sont satisfaits"
 }
 
@@ -99,12 +97,12 @@ check_prerequisites() {
 
 build_angular() {
     log_info "Phase 1 : Build Angular (production)..."
-    
+
     cd "$ANGULAR_DIR" || {
         log_error "Impossible d'accéder au dossier $ANGULAR_DIR"
         exit 1
     }
-    
+
     # Vérifier les dépendances
     if [ ! -d "node_modules" ]; then
         log_info "Installation des dépendances Node.js..."
@@ -113,32 +111,36 @@ build_angular() {
             exit 1
         fi
     else
-        log_info "Dépendances déjà installées, skip npm install"
+        log_info "Dépendances déjà installées"
     fi
-    
+
     # Nettoyer le cache et les builds précédents
     log_info "Nettoyage du cache Angular..."
     rm -rf node_modules/.cache dist
-    
+
     # Build Angular en mode production
     log_info "Compilation Angular en mode production..."
-    if ! npx ng build --configuration production --verbose; then
+    if ! npm run build; then
         log_error "Échec du build Angular"
         exit 1
     fi
-    
+
     # Vérifier que le build a réussi
-    local default_project
-    default_project=$(node -p "Object.keys(require('./angular.json').projects)[0]")
-    local build_output_dir="dist/$default_project/browser"
-    
+    local build_output_dir="$ANGULAR_DIR/dist/browser"
+
     if [ ! -d "$build_output_dir" ]; then
         log_error "Dossier de build introuvable : $build_output_dir"
         exit 1
     fi
-    
+
+    # Vérifier qu'il contient des fichiers
+    if [ ! "$(ls -A "$build_output_dir")" ]; then
+        log_error "Le dossier de build est vide : $build_output_dir"
+        exit 1
+    fi
+
     log_success "Build Angular réussi"
-    echo "$build_output_dir" > /tmp/build_output_dir  # Sauvegarder le chemin
+    cd "$PROJECT_ROOT"
 }
 
 # =============================================================================
@@ -146,82 +148,109 @@ build_angular() {
 # =============================================================================
 
 deploy_to_symfony() {
-    local build_output_dir
-    build_output_dir=$(cat /tmp/build_output_dir)
-    
     log_info "Phase 2 : Déploiement vers Symfony..."
-    
+
     cd "$PROJECT_ROOT"
-    
-    # Nettoyer le dossier public Symfony
-    log_info "Nettoyage de $SYMFONY_PUBLIC_DIR..."
-    rm -rf "$SYMFONY_PUBLIC_DIR"/*
+
+    # Vérifier que le dossier backend existe
+    if [ ! -d "$SYMFONY_BACKEND_DIR" ]; then
+        log_error "Dossier backend introuvable : $SYMFONY_BACKEND_DIR"
+        exit 1
+    fi
+
+    # Créer le dossier public s'il n'existe pas
     mkdir -p "$SYMFONY_PUBLIC_DIR"
-    
+
+    # Nettoyer le dossier public Symfony (garder .htaccess et index.php si présents)
+    log_info "Nettoyage de $SYMFONY_PUBLIC_DIR..."
+    find "$SYMFONY_PUBLIC_DIR" -type f \! \( -name '.htaccess' -o -name 'index.php' \) -delete
+    find "$SYMFONY_PUBLIC_DIR" -type d -empty -delete
+
     # Copier tous les fichiers du build Angular
-    local angular_build_path="$PROJECT_ROOT/$ANGULAR_DIR/$build_output_dir"
-    
+    local angular_build_path="$PROJECT_ROOT/$ANGULAR_DIR/dist/browser"
+
     if [ ! -d "$angular_build_path" ]; then
         log_error "Dossier de build Angular introuvable : $angular_build_path"
         exit 1
     fi
-    
+
     log_info "Copie des fichiers Angular vers Symfony..."
-    cp -r "$angular_build_path"/* "$SYMFONY_PUBLIC_DIR/"
     
+    # Copier le contenu du dossier dist vers public
+    cp -r "$angular_build_path"/* "$SYMFONY_PUBLIC_DIR/"
+
+    # Vérifier que index.html a été copié
+    if [ ! -f "$SYMFONY_PUBLIC_DIR/index.html" ]; then
+        log_error "index.html n'a pas été copié correctement"
+        exit 1
+    fi
+
     log_success "Déploiement vers Symfony réussi"
 }
 
 # =============================================================================
-# PHASE 3 : VERSIONING ET OPTIMISATION
+# PHASE 3 : CONFIGURATION WEB OPTIMISÉE
 # =============================================================================
 
-version_assets() {
-    log_info "Phase 3 : Versioning des assets..."
+configure_web_optimization() {
+    log_info "Phase 3 : Configuration web optimisée..."
+
+    cd "$PROJECT_ROOT/$SYMFONY_PUBLIC_DIR"
+
+    # Créer/mettre à jour .htaccess pour optimisation (si Apache)
+    if [ ! -f ".htaccess" ]; then
+        log_info "Création du fichier .htaccess d'optimisation..."
+        cat > .htaccess << 'EOF'
+<IfModule mod_rewrite.c>
+    RewriteEngine On
     
-    cd "$SYMFONY_PUBLIC_DIR" || exit 1
+    # Redirection des routes API vers Symfony (si nécessaire)
+    # RewriteCond %{REQUEST_URI} ^/api/
+    # RewriteRule ^(.*)$ index.php [QSA,L]
     
-    # Fonction pour versionner un fichier
-    version_file() {
-        local file="$1"
-        local base=$(basename "$file")
-        local hash=$(sha1sum "$file" | cut -c1-8)
-        local ext="${base##*.}"
-        local name="${base%.*}"
-        local newname="${name}-${hash}.${ext}"
-        
-        mv "$file" "$newname"
-        echo "$base|$newname"
-    }
+    # Security headers
+    <IfModule mod_headers.c>
+        Header always set X-Content-Type-Options nosniff
+        Header always set X-Frame-Options SAMEORIGIN
+        Header always set X-XSS-Protection "1; mode=block"
+        Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    </IfModule>
     
-    declare -a versioned_files
+    # Cache static assets (performance)
+    <IfModule mod_expires.c>
+        ExpiresActive on
+        ExpiresByType text/css "access plus 1 year"
+        ExpiresByType application/javascript "access plus 1 year"
+        ExpiresByType image/png "access plus 1 year"
+        ExpiresByType image/jpg "access plus 1 year"
+        ExpiresByType image/jpeg "access plus 1 year"
+        ExpiresByType image/gif "access plus 1 year"
+        ExpiresByType image/svg+xml "access plus 1 year"
+        ExpiresByType image/webp "access plus 1 year"
+        ExpiresByType font/woff2 "access plus 1 year"
+        ExpiresByType font/woff "access plus 1 year"
+    </IfModule>
     
-    # Versionner tous les fichiers JS et CSS (sauf ceux déjà versionnés par Angular)
-    for file in *.js *.css; do
-        if [[ -f "$file" && ! "$file" =~ -[a-f0-9]{8}\.(js|css)$ ]]; then
-            versioned_files+=("$(version_file "$file")")
-        fi
-    done
-    
-    local file_count=${#versioned_files[@]}
-    log_info "$file_count fichier(s) versionné(s)"
-    
-    # Générer le manifest.json et mettre à jour index.html
-    if [ ${#versioned_files[@]} -gt 0 ]; then
-        log_info "Génération du manifest.json..."
-        echo "{" > manifest.json
-        for map in "${versioned_files[@]}"; do
-            local original=$(echo "$map" | cut -d'|' -f1)
-            local hashed=$(echo "$map" | cut -d'|' -f2)
-            sed -i "s|$original|$hashed|g" index.html
-            echo "  \"$original\": \"$hashed\"," >> manifest.json
-        done
-        sed -i '$ s/,$//' manifest.json
-        echo "}" >> manifest.json
-        log_success "Manifest.json généré"
+    # Compression
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/plain
+        AddOutputFilterByType DEFLATE text/html
+        AddOutputFilterByType DEFLATE text/xml
+        AddOutputFilterByType DEFLATE text/css
+        AddOutputFilterByType DEFLATE application/xml
+        AddOutputFilterByType DEFLATE application/xhtml+xml
+        AddOutputFilterByType DEFLATE application/rss+xml
+        AddOutputFilterByType DEFLATE application/javascript
+        AddOutputFilterByType DEFLATE application/x-javascript
+    </IfModule>
+</IfModule>
+EOF
+        log_success "Fichier .htaccess créé"
     else
-        log_info "Aucun fichier à versionner (Angular gère déjà le versioning)"
+        log_info "Fichier .htaccess existant conservé"
     fi
+
+    log_info "Configuration web optimisée terminée"
 }
 
 # =============================================================================
@@ -230,26 +259,52 @@ version_assets() {
 
 final_checks() {
     log_info "Phase 4 : Vérifications finales..."
-    
+
     cd "$PROJECT_ROOT/$SYMFONY_PUBLIC_DIR"
-    
+
     # Vérifier que index.html existe
     if [ ! -f "index.html" ]; then
         log_error "index.html manquant dans le dossier public"
         exit 1
     fi
-    
+
     # Vérifier la taille des fichiers
-    local index_size=$(stat -c%s "index.html" 2>/dev/null || stat -f%z "index.html" 2>/dev/null || echo "0")
+    local index_size
+    if command -v stat >/dev/null 2>&1; then
+        if stat -c%s "index.html" >/dev/null 2>&1; then
+            index_size=$(stat -c%s "index.html")
+        elif stat -f%z "index.html" >/dev/null 2>&1; then
+            index_size=$(stat -f%z "index.html")
+        else
+            index_size="inconnu"
+        fi
+    else
+        index_size="inconnu"
+    fi
     log_info "Taille d'index.html : $index_size bytes"
-    
+
     # Compter les assets
     local asset_count=0
-    if [ -d "assets" ]; then
-        asset_count=$(find assets -type f | wc -l)
+    local js_count=0
+    local css_count=0
+
+    if [ -d "." ]; then
+        asset_count=$(find . -type f -name "*.js" -o -name "*.css" -o -name "*.png" -o -name "*.jpg" -o -name "*.svg" | wc -l)
+        js_count=$(find . -type f -name "*.js" | wc -l)
+        css_count=$(find . -type f -name "*.css" | wc -l)
     fi
-    log_info "Nombre d'assets copiés : $asset_count"
-    
+
+    log_info "Nombre total d'assets : $asset_count"
+    log_info "Fichiers JS : $js_count"
+    log_info "Fichiers CSS : $css_count"
+
+    # Vérifier la structure des fichiers Angular
+    if [ -f "main*.js" ]; then
+        log_success "Fichier main.js trouvé (build Angular valide)"
+    else
+        log_warning "Fichier main.js non trouvé, vérifiez le build"
+    fi
+
     log_success "Vérifications finales terminées"
 }
 
@@ -260,29 +315,34 @@ final_checks() {
 main() {
     log_info "🚀 Début du déploiement Angular + Symfony"
     log_info "Projet : $PROJECT_ROOT"
-    
+
     # Initialiser le fichier de log
     echo "=== DÉPLOIEMENT DU $(date) ===" > "$LOG_FILE"
-    
+
     # Vérifier les prérequis
     check_prerequisites
-    
+
     # Exécuter les phases
     build_angular
     deploy_to_symfony
-    version_assets
+    configure_web_optimization
     final_checks
-    
+
     # Résumé final
     log_success "🎉 Déploiement terminé avec succès !"
     log_info "Logs disponibles dans : $LOG_FILE"
     log_info "Dossier public Symfony : $SYMFONY_PUBLIC_DIR"
-    
+
     # Afficher les statistiques
     cd "$PROJECT_ROOT/$SYMFONY_PUBLIC_DIR"
     log_info "📊 Statistiques du déploiement :"
-    log_info "  - Fichiers dans le dossier public : $(ls -1 | wc -l)"
-    log_info "  - Taille totale : $(du -sh . | cut -f1)"
+    local file_count=$(ls -1 | wc -l)
+    log_info "  - Fichiers dans le dossier public : $file_count"
+    
+    if command -v du >/dev/null 2>&1; then
+        local total_size=$(du -sh . 2>/dev/null | cut -f1 || echo "inconnu")
+        log_info "  - Taille totale : $total_size"
+    fi
 }
 
 # =============================================================================
@@ -290,9 +350,11 @@ main() {
 # =============================================================================
 
 # Vérifier que le script est exécuté depuis le bon répertoire
-if [ ! -d "$ANGULAR_DIR" ] || [ ! -d "$SYMFONY_PUBLIC_DIR" ]; then
+if [ ! -d "$ANGULAR_DIR" ] || [ ! -d "$SYMFONY_BACKEND_DIR" ]; then
     log_error "Ce script doit être exécuté depuis la racine du projet"
-    log_error "Répertoires attendus : $ANGULAR_DIR et $SYMFONY_PUBLIC_DIR"
+    log_error "Répertoires attendus : $ANGULAR_DIR et $SYMFONY_BACKEND_DIR"
+    log_info "Structure actuelle du projet :"
+    ls -la
     exit 1
 fi
 

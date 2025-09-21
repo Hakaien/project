@@ -1,5 +1,23 @@
 # AngularFrontend
 
+Ce projet utilise l'API standalone moderne d'Angular (Angular 14+) pour le routage et le bootstrap de l'application, avec Tailwind CSS pour les styles.
+
+## 🎨 Build CSS avec Tailwind
+
+Le projet utilise Tailwind CSS pour les styles. Le processus de build est automatisé :
+
+```bash
+# Build CSS seulement
+npm run build:css
+
+# Build complet (CSS + Angular)
+npm run build
+```
+
+Le fichier `output.css` est généré dans `src/` et est automatiquement inclus dans le build final.
+
+---ularFrontend
+
 Ce projet utilise l’API standalone moderne d’Angular (Angular 14+) pour le routage et le bootstrap de l’application.
 
 ---
@@ -13,6 +31,7 @@ Ce projet utilise l’API standalone moderne d’Angular (Angular 14+) pour le r
 | Angular CLI      | >= 15.x            |
 
 Installez Angular CLI globalement si besoin :
+
 ```bash
 npm install -g @angular/cli
 ```

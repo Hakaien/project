@@ -15,6 +15,13 @@ import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-
 import { UserManagementComponent } from './features/admin/user-management/user-management.component';
 
 export const appRoutes: Routes = [
+  // Route par défaut
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+
   // Routes protégées (utilisateurs connectés)
   {
     path: 'dashboard',

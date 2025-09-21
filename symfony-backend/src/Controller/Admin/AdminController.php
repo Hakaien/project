@@ -101,7 +101,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/users/{id}', name: 'admin_get_user', methods: ['GET'])]
-    public function getUser(int $id): JsonResponse
+    public function getAdminUser(int $id): JsonResponse
     {
         $user = $this->entityManager->getRepository(User::class)->find($id);
         
